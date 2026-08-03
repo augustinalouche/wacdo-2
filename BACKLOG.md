@@ -6,10 +6,10 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 0 — Cadrage & mise en place
 
-- [ ] **T00.1** — Créer la structure des dossiers du projet (ex. `/front` et `/back`, ou 2 dépôts séparés)
-- [ ] **T00.2** — Initialiser Git + créer le(s) dépôt(s) GitHub public(s)
-- [ ] **T00.3** — Rédiger le squelette des README (un par bloc, à compléter au fil du projet)
-- [ ] **T00.4** — Lister les assets fournis (images produits, logo, maquette) à intégrer, ou à défaut en créer des provisoires
+- [x] **T00.1** — Créer la structure des dossiers du projet (ex. `/front` et `/back`, ou 2 dépôts séparés)
+- [x] **T00.2** — Initialiser Git + créer le(s) dépôt(s) GitHub public(s)
+- [x] **T00.3** — Rédiger le squelette des README (un par bloc, à compléter au fil du projet)
+- [x] **T00.4** — Lister les assets fournis (images produits, logo, maquette) à intégrer, ou à défaut en créer des provisoires
 
 ---
 

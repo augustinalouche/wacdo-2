@@ -53,7 +53,7 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 3 — Bloc 2 : Fondations Back-end (MVC maison)
 
-- [ ] **T03.1** — Créer la base de données à partir du MPD (script SQL `CREATE TABLE`)
+- [x] **T03.1** — Créer la base de données à partir du MPD (script SQL `CREATE TABLE`) *(base `wacdo2`, voir `back/sql/schema.sql`)*
 - [ ] **T03.2** — Script de données de test (`INSERT`) : quelques produits, menus, utilisateurs de chaque rôle
 - [ ] **T03.3** — Mettre en place l'autoload des classes (PSR-4 simplifié ou autoload maison)
 - [ ] **T03.4** — Créer la classe de connexion à la base (PDO, singleton ou injection simple)

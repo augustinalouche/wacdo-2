@@ -2,11 +2,14 @@
 -- Genere a partir de docs/conception/03-mpd.md
 -- Moteur cible : MySQL 8+ / MariaDB 10.4+ (support des contraintes CHECK)
 
-CREATE DATABASE IF NOT EXISTS wacdo
+-- Nom "wacdo2" (et non "wacdo") pour eviter toute collision avec une autre
+-- base "wacdo" pre-existante sur le serveur MySQL (projet distinct, sans lien
+-- avec cet examen).
+CREATE DATABASE IF NOT EXISTS wacdo2
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE wacdo;
+USE wacdo2;
 
 SET FOREIGN_KEY_CHECKS = 0;
 

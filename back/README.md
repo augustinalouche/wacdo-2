@@ -13,7 +13,11 @@ Bloc 2 du projet Wacdo : back-office (gestion produits/menus/utilisateurs/comman
 
 ## Installation
 
-1. Créer la base de données à partir du script SQL (`sql/schema.sql`, à venir — `T03.1`)
+1. Créer la base de données (`wacdo2`) à partir du script SQL :
+   ```
+   mysql -u root < sql/schema.sql
+   ```
+   (ou via l'onglet "Importer" de phpMyAdmin)
 2. Copier `config.example.php` en `config.php` et renseigner les accès BDD (`T03.8`, fichier hors dépôt public)
 3. Servir le dossier via Apache (XAMPP) :
 

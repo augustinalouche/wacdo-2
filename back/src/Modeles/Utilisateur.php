@@ -69,6 +69,22 @@ abstract class Utilisateur
             ?? throw new InvalidArgumentException("Rôle utilisateur inconnu : {$role}");
     }
 
+    /**
+     * Rôles possibles et leur libellé — utilisé pour peupler le `<select>`
+     * du formulaire de gestion des utilisateurs (T06.2).
+     *
+     * @return array<string, string>
+     */
+    public static function rolesDisponibles(): array
+    {
+        $roles = [];
+        foreach (array_keys(self::CLASSES_PAR_ROLE) as $role) {
+            $roles[$role] = self::depuisRole($role)->libelleRole();
+        }
+
+        return $roles;
+    }
+
     public function verifierMotDePasse(string $motDePasseClair): bool
     {
         return password_verify($motDePasseClair, $this->motDePasseHache);
@@ -77,6 +93,16 @@ abstract class Utilisateur
     public function id(): int
     {
         return $this->id;
+    }
+
+    public function nom(): string
+    {
+        return $this->nom;
+    }
+
+    public function prenom(): string
+    {
+        return $this->prenom;
     }
 
     public function nomComplet(): string

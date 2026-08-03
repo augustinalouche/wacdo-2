@@ -91,9 +91,9 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 6 — Bloc 2 : Gestion des utilisateurs (rôle Administration)
 
-- [ ] **T06.1** — CRUD des comptes utilisateurs internes (créer/modifier/supprimer)
-- [ ] **T06.2** — Attribution/modification du rôle d'un utilisateur
-- [ ] **T06.3** — Validation serveur (email/identifiant unique, mot de passe minimum)
+- [x] **T06.1** — CRUD des comptes utilisateurs internes (créer/modifier/supprimer) *(voir `UtilisateursControleur`, `UtilisateurDepot` ; auto-suppression et auto-désactivation bloquées)*
+- [x] **T06.2** — Attribution/modification du rôle d'un utilisateur *(voir `Utilisateur::rolesDisponibles()`, sélecteur de rôle dans `utilisateurs/formulaire.php`)*
+- [x] **T06.3** — Validation serveur (email/identifiant unique, mot de passe minimum) *(email unique via `UtilisateurDepot::emailExiste`, mot de passe ≥ 8 caractères)*
 
 ---
 

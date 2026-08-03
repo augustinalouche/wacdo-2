@@ -48,8 +48,14 @@ $routeur->post('/connexion', [AuthControleur::class, 'connecter']);
 $routeur->post('/deconnexion', [AuthControleur::class, 'deconnecter']);
 $routeur->get('/tableau-de-bord', [TableauDeBordControleur::class, 'afficher']);
 
-// Squelette du module Utilisateurs (EPIC 6) — sert ici de demo au controle d'acces par role.
+// EPIC 6 — Gestion des utilisateurs (role Administration)
 $routeur->get('/utilisateurs', [UtilisateursControleur::class, 'liste']);
+$routeur->get('/utilisateurs/nouveau', [UtilisateursControleur::class, 'nouveauFormulaire']);
+$routeur->post('/utilisateurs', [UtilisateursControleur::class, 'creer']);
+$routeur->get('/utilisateurs/{id}/editer', [UtilisateursControleur::class, 'editerFormulaire']);
+$routeur->post('/utilisateurs/{id}', [UtilisateursControleur::class, 'modifier']);
+$routeur->post('/utilisateurs/{id}/statut', [UtilisateursControleur::class, 'basculerActif']);
+$routeur->post('/utilisateurs/{id}/supprimer', [UtilisateursControleur::class, 'supprimer']);
 
 // EPIC 5 — Gestion Produits & Menus (role Administration)
 $routeur->get('/produits', [ProduitsControleur::class, 'liste']);
@@ -67,6 +73,6 @@ $routeur->get('/menus/{id}/editer', [MenusControleur::class, 'editerFormulaire']
 $routeur->post('/menus/{id}', [MenusControleur::class, 'modifier']);
 $routeur->post('/menus/{id}/supprimer', [MenusControleur::class, 'supprimer']);
 
-// Routes suivantes enrichies au fil des EPICs 6 a 8 (utilisateurs, commandes, API).
+// Routes suivantes enrichies au fil des EPICs 7 a 8 (commandes, API).
 
 $routeur->distribuer($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

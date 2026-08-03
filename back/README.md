@@ -4,7 +4,7 @@ Bloc 2 du projet Wacdo : back-office (gestion produits/menus/utilisateurs/comman
 
 ## Statut
 
-🚧 En cours de développement — fondations MVC, authentification/rôles et gestion produits/menus opérationnelles (voir `EPIC 3` à `EPIC 5` et suivants du `BACKLOG.md` à la racine).
+🚧 En cours de développement — fondations MVC, authentification/rôles, gestion produits/menus et gestion des utilisateurs opérationnelles (voir `EPIC 3` à `EPIC 6` et suivants du `BACKLOG.md` à la racine).
 
 ## Stack
 
@@ -52,14 +52,13 @@ back/
 └── src/
     ├── Core/            # Autoloader, Database (PDO), Routeur, Controleur/Modele abstraits, Validation, Flash, TeleversementImage
     ├── Securite/         # Auth (session, contrôle d'accès par rôle) et Csrf
-    ├── Controleurs/       # AuthControleur, TableauDeBordControleur, ProduitsControleur, MenusControleur, UtilisateursControleur (squelette)
+    ├── Controleurs/       # AuthControleur, TableauDeBordControleur, ProduitsControleur, MenusControleur, UtilisateursControleur
     ├── Modeles/            # Utilisateur (+ sous-classes par rôle), Produit, Menu, dépôts (*Depot) et ReferentielDepot
     └── Vues/
         ├── auth/connexion.php
         ├── tableau-de-bord.php
-        ├── produits/ , menus/       # liste + formulaire (création/édition)
-        ├── utilisateurs/liste.php   # squelette EPIC 6
-        └── erreurs/                 # pages 403 / 404 / 500
+        ├── produits/ , menus/ , utilisateurs/   # liste + formulaire (création/édition) pour chaque module
+        └── erreurs/                              # pages 403 / 404 / 500
 ```
 
 ## Authentification & rôles (`EPIC 4`)
@@ -76,6 +75,12 @@ back/
 - Un menu est toujours associé à un burger **non déjà utilisé par un autre menu** (contrainte `uq_menu_burger`) ; l'accompagnement/boisson/sauce restent au choix du client à la commande, pas figés par menu.
 - L'image envoyée via le formulaire est validée (extension, taille ≤ 2 Mo) puis enregistrée directement dans `front/img/` (`Core\TeleversementImage`) : le front peut l'utiliser immédiatement, sans étape de synchronisation.
 - Toutes les actions de modification (créer/modifier/activer/supprimer) vérifient le jeton CSRF (`Securite\Csrf`).
+
+## Gestion des utilisateurs (`EPIC 6`)
+
+- `/utilisateurs` (CRUD complet) est réservé au module `utilisateurs` (rôle Administration).
+- Email unique vérifié en base (`UtilisateurDepot::emailExiste`) en plus de la contrainte SQL, mot de passe d'au moins 8 caractères (vide = inchangé en édition).
+- Un compte ne peut ni se supprimer, ni se désactiver, ni changer son propre rôle (garde-fous côté contrôleur ET champs désactivés côté formulaire).
 
 ## Endpoints API
 

@@ -107,3 +107,97 @@ a { color: var(--couleur-accent); }
   font-size: 13px;
   margin-top: var(--espace-4);
 }
+
+.barre-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--espace-4);
+  flex-wrap: wrap;
+  gap: var(--espace-3);
+}
+
+.message-succes {
+  color: #1f5c2b;
+  background: #e4f3e6;
+  border: 2px solid #1f5c2b;
+  padding: var(--espace-2) var(--espace-3);
+  margin: 0 0 var(--espace-4);
+  font-size: 14px;
+}
+
+.tableau-admin {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--couleur-surface);
+}
+.tableau-admin th, .tableau-admin td {
+  padding: var(--espace-2) var(--espace-3);
+  border-bottom: 1px solid var(--couleur-divider);
+  text-align: left;
+  vertical-align: middle;
+  font-size: 14px;
+}
+.tableau-admin th { font-weight: 800; border-bottom: 2px solid var(--couleur-divider); }
+.tableau-admin img { width: 48px; height: 48px; object-fit: cover; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-actif { background: #e4f3e6; color: #1f5c2b; }
+.badge-inactif { background: var(--couleur-accent-clair); color: var(--couleur-accent-fonce); }
+
+.actions-ligne { display: flex; gap: var(--espace-2); align-items: center; flex-wrap: wrap; }
+.actions-ligne form { display: inline; }
+
+.lien-bouton {
+  display: inline-flex;
+  padding: 6px 10px;
+  background: var(--couleur-texte);
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+.lien-bouton:hover { background: var(--couleur-accent-fonce); }
+
+.bouton-discret {
+  background: none;
+  border: 1px solid var(--couleur-divider);
+  padding: 5px 9px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--couleur-texte);
+}
+.bouton-discret:hover { border-color: var(--couleur-accent); }
+
+.bouton-danger { color: var(--couleur-accent-fonce); border-color: var(--couleur-accent); }
+
+.formulaire-admin { max-width: 640px; }
+.formulaire-admin .champ input[type="text"],
+.formulaire-admin .champ input[type="number"],
+.formulaire-admin .champ input[type="file"],
+.formulaire-admin .champ select,
+.formulaire-admin .champ textarea {
+  padding: var(--espace-3);
+  border: 2px solid var(--couleur-divider);
+  font: inherit;
+  font-size: 15px;
+  width: 100%;
+}
+.formulaire-admin .champ textarea { resize: vertical; }
+.formulaire-admin .champ-checkbox { flex-direction: row; align-items: center; gap: var(--espace-2); }
+.formulaire-admin .champ-checkbox input { width: auto; }
+.formulaire-admin fieldset { border: 2px solid var(--couleur-divider); margin-bottom: var(--espace-4); padding: var(--espace-3); }
+.formulaire-admin legend { font-weight: 800; padding: 0 var(--espace-2); }
+.formulaire-admin .ligne-deux-colonnes { display: flex; gap: var(--espace-4); }
+.formulaire-admin .ligne-deux-colonnes .champ { flex: 1; }
+.formulaire-admin .apercu-image { margin-bottom: var(--espace-3); }
+.formulaire-admin .apercu-image img { width: 96px; height: 96px; object-fit: cover; }
+.formulaire-admin .btn { width: auto; padding: var(--espace-3) var(--espace-6); }
+.formulaire-admin .liste-erreurs { margin: 0 0 var(--espace-4); padding-left: 18px; }
+
+.retour-liste { display: inline-block; margin-bottom: var(--espace-4); }

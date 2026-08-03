@@ -52,4 +52,15 @@ abstract class Controleur
     {
         $this->rediriger(Routeur::urlBase() . $chemin);
     }
+
+    /**
+     * À appeler quand une ressource demandée (ex. `{id}` d'une route) n'existe
+     * pas en base — réutilise la page 404 du routeur (T03.7).
+     */
+    protected function page404(): void
+    {
+        http_response_code(404);
+        require dirname(__DIR__) . '/Vues/erreurs/404.php';
+        exit;
+    }
 }

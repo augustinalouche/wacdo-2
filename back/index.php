@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Wacdo\Controleurs\AuthControleur;
+use Wacdo\Controleurs\MenusControleur;
+use Wacdo\Controleurs\ProduitsControleur;
 use Wacdo\Controleurs\TableauDeBordControleur;
 use Wacdo\Controleurs\UtilisateursControleur;
 use Wacdo\Core\Autoloader;
@@ -49,6 +51,22 @@ $routeur->get('/tableau-de-bord', [TableauDeBordControleur::class, 'afficher']);
 // Squelette du module Utilisateurs (EPIC 6) — sert ici de demo au controle d'acces par role.
 $routeur->get('/utilisateurs', [UtilisateursControleur::class, 'liste']);
 
-// Routes suivantes enrichies au fil des EPICs 5 a 8 (CRUD, commandes, API).
+// EPIC 5 — Gestion Produits & Menus (role Administration)
+$routeur->get('/produits', [ProduitsControleur::class, 'liste']);
+$routeur->get('/produits/nouveau', [ProduitsControleur::class, 'nouveauFormulaire']);
+$routeur->post('/produits', [ProduitsControleur::class, 'creer']);
+$routeur->get('/produits/{id}/editer', [ProduitsControleur::class, 'editerFormulaire']);
+$routeur->post('/produits/{id}', [ProduitsControleur::class, 'modifier']);
+$routeur->post('/produits/{id}/disponibilite', [ProduitsControleur::class, 'basculerDisponibilite']);
+$routeur->post('/produits/{id}/supprimer', [ProduitsControleur::class, 'supprimer']);
+
+$routeur->get('/menus', [MenusControleur::class, 'liste']);
+$routeur->get('/menus/nouveau', [MenusControleur::class, 'nouveauFormulaire']);
+$routeur->post('/menus', [MenusControleur::class, 'creer']);
+$routeur->get('/menus/{id}/editer', [MenusControleur::class, 'editerFormulaire']);
+$routeur->post('/menus/{id}', [MenusControleur::class, 'modifier']);
+$routeur->post('/menus/{id}/supprimer', [MenusControleur::class, 'supprimer']);
+
+// Routes suivantes enrichies au fil des EPICs 6 a 8 (utilisateurs, commandes, API).
 
 $routeur->distribuer($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

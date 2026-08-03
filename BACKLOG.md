@@ -77,15 +77,15 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 5 — Bloc 2 : Gestion Produits & Menus (rôle Administration)
 
-- [ ] **T05.1** — Modèle + table Produit (CRUD complet : create/read/update/delete)
-- [ ] **T05.2** — Vue liste des produits (back-office) + actions
-- [ ] **T05.3** — Formulaire création/édition produit (nom, description, prix, image, catégorie, disponibilité)
-- [ ] **T05.4** — Activation/désactivation d'un produit (disponibilité)
-- [ ] **T05.5** — Upload/gestion de l'image produit
-- [ ] **T05.6** — Modèle + table Menu + table de composition (liaison menu ↔ produits/options)
-- [ ] **T05.7** — Formulaire création/édition d'un menu (sélection burger, accompagnement, boisson, sauce, options de taille)
-- [ ] **T05.8** — Vue liste des menus + suppression
-- [ ] **T05.9** — Validation serveur des formulaires (champs requis, prix numérique positif, etc.)
+- [x] **T05.1** — Modèle + table Produit (CRUD complet : create/read/update/delete) *(voir `back/src/Modeles/Produit.php` + `ProduitDepot`, table `produit`/`produit_taille` déjà créées en `T03.1`)*
+- [x] **T05.2** — Vue liste des produits (back-office) + actions *(voir `back/src/Vues/produits/liste.php`)*
+- [x] **T05.3** — Formulaire création/édition produit (nom, description, prix, image, catégorie, disponibilité) *(voir `back/src/Vues/produits/formulaire.php`)*
+- [x] **T05.4** — Activation/désactivation d'un produit (disponibilité) *(voir `ProduitsControleur::basculerDisponibilite`)*
+- [x] **T05.5** — Upload/gestion de l'image produit *(voir `Core\TeleversementImage`, enregistre directement dans `front/img/`)*
+- [x] **T05.6** — Modèle + table Menu + table de composition (liaison menu ↔ produits/options) *(voir `back/src/Modeles/Menu.php` + `MenuDepot` ; composition gérée côté commande, pas côté catalogue — voir `docs/conception/04-structure-json.md`)*
+- [x] **T05.7** — Formulaire création/édition d'un menu (sélection burger, accompagnement, boisson, sauce, options de taille) *(voir `back/src/Vues/menus/formulaire.php` ; accompagnement/boisson/sauce restent au choix du client, pas figés par menu — règle métier)*
+- [x] **T05.8** — Vue liste des menus + suppression *(voir `back/src/Vues/menus/liste.php`)*
+- [x] **T05.9** — Validation serveur des formulaires (champs requis, prix numérique positif, etc.) *(voir `Core\Validation`, utilisée par `ProduitsControleur`/`MenusControleur`)*
 
 ---
 

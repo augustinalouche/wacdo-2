@@ -27,8 +27,13 @@ $base = Routeur::urlBase();
     <main class="contenu-admin">
         <h1>Bienvenue, <?= htmlspecialchars($utilisateur['prenom'], ENT_QUOTES) ?> !</h1>
         <p>Connecté(e) en tant que <strong><?= htmlspecialchars($utilisateur['libelleRole'], ENT_QUOTES) ?></strong> (<?= htmlspecialchars($utilisateur['email'], ENT_QUOTES) ?>).</p>
-        <p>Les modules de gestion (utilisateurs, produits, menus, commandes, statistiques) seront ajoutés au fil des prochains <code>EPIC</code> du backlog.</p>
-        <p><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/utilisateurs">Module « Utilisateurs » (réservé à l'Administration — démonstration T04.5)</a></p>
+
+        <ul>
+            <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/produits">Produits</a></li>
+            <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/menus">Menus</a></li>
+            <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/utilisateurs">Utilisateurs</a> (réservé à l'Administration)</li>
+        </ul>
+        <p>Le module « Commandes » (rôles Préparation/Accueil) sera ajouté avec <code>EPIC 7</code>.</p>
     </main>
 </body>
 </html>

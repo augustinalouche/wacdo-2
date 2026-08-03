@@ -19,7 +19,7 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 - [x] **T01.2** — Définir les relations et cardinalités entre entités (1-N, N-N) et les contraintes (clés étrangères, unicité)
 - [x] **T01.3** — Réaliser le schéma conceptuel de données (MCD) *(voir `docs/conception/02-mcd.md`)*
 - [x] **T01.4** — Décliner le schéma physique de données (MPD) : tables, colonnes, types, clés primaires/étrangères *(voir `docs/conception/03-mpd.md` et `back/sql/schema.sql`)*
-- [ ] **T01.5** — Définir la structure JSON commune (produits, menus, commande envoyée) — **doit être identique** entre les fichiers JSON statiques et les futures réponses API
+- [x] **T01.5** — Définir la structure JSON commune (produits, menus, commande envoyée) — **doit être identique** entre les fichiers JSON statiques et les futures réponses API *(voir `docs/conception/04-structure-json.md`)*
 - [ ] **T01.6** — Réaliser le schéma fonctionnel (parcours client borne + parcours back-office par rôle, diagramme de cas d'utilisation)
 - [ ] **T01.7** — Définir/adapter le wireframe des écrans de la borne (catalogue, panier, récapitulatif, saisie numéro)
 - [ ] **T01.8** — Définir le wireframe des écrans back-office (login, dashboard par rôle, CRUD produits/menus, liste commandes)
@@ -31,7 +31,7 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 - [ ] **T02.1** — Squelette HTML sémantique des pages (accueil/catalogue, panier, récapitulatif) avec balises `header`/`nav`/`main`/`section`/`footer`
 - [ ] **T02.2** — Intégration CSS de base à partir de la maquette (grille, typographie, couleurs) ciblant 1920×1080
 - [ ] **T02.3** — Media queries / mise en page responsive pour résolutions inférieures (tablette, mobile si applicable)
-- [ ] **T02.4** — Créer/placer les fichiers `produits.json` et `menus.json` sur le serveur (structure définie en T01.5)
+- [x] **T02.4** — Créer/placer les fichiers `produits.json` et `menus.json` sur le serveur (structure définie en T01.5) *(voir `front/data/`)*
 - [ ] **T02.5** — Fonction AJAX (`fetch`) de récupération des produits + affichage dynamique du catalogue
 - [ ] **T02.6** — Fonction AJAX de récupération des menus + affichage dynamique
 - [ ] **T02.7** — Filtrage/affichage par catégorie (si prévu dans la maquette)

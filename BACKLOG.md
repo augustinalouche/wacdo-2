@@ -54,13 +54,13 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 ## EPIC 3 — Bloc 2 : Fondations Back-end (MVC maison)
 
 - [x] **T03.1** — Créer la base de données à partir du MPD (script SQL `CREATE TABLE`) *(base `wacdo2`, voir `back/sql/schema.sql`)*
-- [ ] **T03.2** — Script de données de test (`INSERT`) : quelques produits, menus, utilisateurs de chaque rôle
-- [ ] **T03.3** — Mettre en place l'autoload des classes (PSR-4 simplifié ou autoload maison)
-- [ ] **T03.4** — Créer la classe de connexion à la base (PDO, singleton ou injection simple)
-- [ ] **T03.5** — Créer le routeur / front controller (point d'entrée unique, dispatch vers les contrôleurs)
-- [ ] **T03.6** — Définir la structure MVC (dossiers `Modeles`, `Controleurs`, `Vues`) + classe(s) abstraite(s) de base (ex. `Modele` abstrait, `Controleur` abstrait)
-- [ ] **T03.7** — Mettre en place la gestion des erreurs globales (404, 500) avec pages/réponses dédiées
-- [ ] **T03.8** — Mettre en place un fichier de configuration (accès BDD, environnement) hors du dépôt public (`.gitignore`)
+- [x] **T03.2** — Script de données de test (`INSERT`) : quelques produits, menus, utilisateurs de chaque rôle
+- [x] **T03.3** — Mettre en place l'autoload des classes (PSR-4 simplifié ou autoload maison)
+- [x] **T03.4** — Créer la classe de connexion à la base (PDO, singleton ou injection simple)
+- [x] **T03.5** — Créer le routeur / front controller (point d'entrée unique, dispatch vers les contrôleurs)
+- [x] **T03.6** — Définir la structure MVC (dossiers `Modeles`, `Controleurs`, `Vues`) + classe(s) abstraite(s) de base (ex. `Modele` abstrait, `Controleur` abstrait)
+- [x] **T03.7** — Mettre en place la gestion des erreurs globales (404, 500) avec pages/réponses dédiées
+- [x] **T03.8** — Mettre en place un fichier de configuration (accès BDD, environnement) hors du dépôt public (`.gitignore`)
 
 ---
 

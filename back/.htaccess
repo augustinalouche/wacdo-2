@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Laisse passer les fichiers/dossiers reels (images, css, js...)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Tout le reste passe par le front controller
+RewriteRule ^ index.php [QSA,L]

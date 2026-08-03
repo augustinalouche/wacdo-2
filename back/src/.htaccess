@@ -1,0 +1,2 @@
+# Interdit tout acces direct aux classes PHP (uniquement accessibles via index.php).
+Require all denied

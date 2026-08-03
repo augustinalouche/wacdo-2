@@ -27,7 +27,33 @@ http://localhost/wacdo2/back/
 
 ## Comptes de test
 
-_À compléter (`T03.2`, `T13.2`)._
+Insérés via `sql/seed.sql`. Mot de passe identique pour les 3 comptes : `Wacdo2026!`
+
+| Rôle | Email |
+| --- | --- |
+| Administration | admin@wacdo.test |
+| Préparation | preparation@wacdo.test |
+| Accueil | accueil@wacdo.test |
+
+## Architecture
+
+```
+back/
+├── index.php           # front controller (point d'entrée unique)
+├── .htaccess           # réécrit tout vers index.php
+├── config/
+│   ├── config.php          # config locale (hors dépôt public)
+│   └── config.example.php  # modèle à copier
+├── sql/
+│   ├── schema.sql       # MPD — création des tables
+│   └── seed.sql         # données de test
+└── src/
+    ├── Core/            # Autoloader, Database (PDO), Routeur, Controleur et Modele abstraits
+    ├── Controleurs/      # (à venir — EPIC 4 et suivants)
+    ├── Modeles/          # (à venir)
+    └── Vues/
+        └── erreurs/      # pages 404 / 500
+```
 
 ## Endpoints API
 

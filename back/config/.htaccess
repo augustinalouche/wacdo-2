@@ -1,0 +1,2 @@
+# Interdit tout acces direct au dossier de configuration (secrets BDD).
+Require all denied

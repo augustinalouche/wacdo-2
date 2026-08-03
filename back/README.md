@@ -4,7 +4,7 @@ Bloc 2 du projet Wacdo : back-office (gestion produits/menus/utilisateurs/comman
 
 ## Statut
 
-🚧 En cours de développement — fondations MVC, authentification/rôles, gestion produits/menus/utilisateurs et gestion des commandes opérationnelles (voir `EPIC 3` à `EPIC 7` et suivants du `BACKLOG.md` à la racine).
+✅ Back-office complet (authentification/rôles, produits/menus/utilisateurs/commandes) + API publique opérationnelle (voir `EPIC 3` à `EPIC 8` du `BACKLOG.md` à la racine). Reste à brancher le front dessus (`EPIC 10`).
 
 ## Stack
 
@@ -52,7 +52,10 @@ back/
 └── src/
     ├── Core/            # Autoloader, Database (PDO), Routeur, Controleur/Modele abstraits, Validation, Flash, TeleversementImage
     ├── Securite/         # Auth (session, contrôle d'accès par rôle) et Csrf
-    ├── Controleurs/       # AuthControleur, TableauDeBordControleur, ProduitsControleur, MenusControleur, UtilisateursControleur, CommandesControleur
+    ├── Controleurs/
+    │   ├── Api/            # ProduitsApiControleur, MenusApiControleur, CommandesApiControleur (EPIC 8)
+    │   ├── AuthControleur.php, TableauDeBordControleur.php
+    │   └── ProduitsControleur.php, MenusControleur.php, UtilisateursControleur.php, CommandesControleur.php
     ├── Modeles/            # Utilisateur (+ sous-classes par rôle), Produit, Menu, Commande/LigneCommande, dépôts (*Depot) et ReferentielDepot
     └── Vues/
         ├── auth/connexion.php
@@ -93,6 +96,17 @@ back/
 - `CommandeDepot::creer()` recalcule et fige le prix de chaque ligne à partir du catalogue courant (prix produit, prix par taille, ou prix de base du menu + suppléments de taille de la composition) : **le prix n'est jamais accepté depuis le formulaire**, même règle que la future API (`docs/conception/04-structure-json.md`, `T09.x`).
 - La création d'une commande (en-tête + lignes + compositions de menu) est transactionnelle : soit tout est inséré, soit rien ne l'est (`PDO::beginTransaction`/`commit`/`rollBack`).
 
-## Endpoints API
+## Endpoints API (`EPIC 8`)
 
-_À documenter au fil du développement (`EPIC 8`, `T13.2`)._
+Toutes les réponses sont en `application/json; charset=utf-8`. Les structures ci-dessous sont **strictement identiques** à `front/data/produits.json`/`menus.json` (voir `docs/conception/04-structure-json.md`) : le front peut basculer des fichiers statiques vers l'API réelle sans rien changer côté appelant (`T10.1`).
+
+| Méthode | Route | Description |
+| --- | --- | --- |
+| `GET` | `/api/produits` | Liste des produits. Filtre optionnel `?categorie=burger\|accompagnement\|boisson\|dessert`. |
+| `GET` | `/api/menus` | `{ sauces: [...], menus: [...] }`. |
+| `POST` | `/api/commandes` | Reçoit `{ numero, origine, lignes: [...] }`, valide, insère en base, renvoie l'accusé de réception. |
+
+- **Sécurité prix** : `POST /api/commandes` ne fait jamais confiance au prix (il n'y en a d'ailleurs aucun dans le JSON envoyé) — `CommandeDepot::creer()` (réutilisé de l'`EPIC 7`) recalcule chaque `prix_unitaire` à partir du catalogue courant.
+- **Réponses d'erreur** structurées et cohérentes (`T08.4`) : `{ "succes": false, "erreur": "..." }` avec le code HTTP approprié (`400` validation, `404` route API inconnue, `500` erreur serveur via le gestionnaire d'exceptions global).
+- **Accusé de réception** (`T08.6`, code `201`) : `{ "succes": true, "commandeId": 42, "numero": "125", "message": "Commande enregistrée." }`.
+- **CORS** (`T08.5`) : `Routeur` ajoute les en-têtes `Access-Control-Allow-*` sur toute route `/api/*` et répond `204` aux requêtes préliminaires `OPTIONS` ; l'origine autorisée se configure via `config['cors']['origine_autorisee']` (`*` en développement, à restreindre en production).

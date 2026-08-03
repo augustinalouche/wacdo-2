@@ -13,6 +13,14 @@ final class Routeur
     /** @var array<int, array{methode: string, regex: string, action: callable|array}> */
     private array $routes = [];
 
+    /** Origine autorisée pour les requêtes CORS sur `/api/*` (T08.5). */
+    private string $origineCorsAutorisee = '*';
+
+    public function autoriserCorsDepuis(string $origine): void
+    {
+        $this->origineCorsAutorisee = $origine;
+    }
+
     public function get(string $chemin, callable|array $action): void
     {
         $this->ajouter('GET', $chemin, $action);
@@ -36,9 +44,22 @@ final class Routeur
     {
         $uri = parse_url($uriBrute, PHP_URL_PATH) ?: '/';
         $uri = $this->retirerCheminDeBase($uri);
+        $methode = strtoupper($methode);
+        $estApi = str_starts_with($uri, '/api/');
+
+        if ($estApi) {
+            $this->appliquerEntetesCors();
+
+            // Requête préliminaire du navigateur avant un vrai GET/POST cross-origin (T08.5).
+            if ($methode === 'OPTIONS') {
+                http_response_code(204);
+
+                return;
+            }
+        }
 
         foreach ($this->routes as $route) {
-            if ($route['methode'] !== strtoupper($methode)) {
+            if ($route['methode'] !== $methode) {
                 continue;
             }
 
@@ -54,7 +75,15 @@ final class Routeur
             }
         }
 
-        $this->page404();
+        $this->page404($estApi);
+    }
+
+    private function appliquerEntetesCors(): void
+    {
+        header('Access-Control-Allow-Origin: ' . $this->origineCorsAutorisee);
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Vary: Origin');
     }
 
     /**
@@ -105,9 +134,24 @@ final class Routeur
         return $uri === '' ? '/' : $uri;
     }
 
-    private function page404(): void
+    /**
+     * Réponse 404 cohérente avec le type de client (T08.4) : JSON pour
+     * `/api/*`, page HTML pour le reste du back-office.
+     */
+    private function page404(bool $estApi): void
     {
         http_response_code(404);
+
+        if ($estApi) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(
+                ['succes' => false, 'erreur' => 'Route API introuvable.'],
+                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+            );
+
+            return;
+        }
+
         require dirname(__DIR__) . '/Vues/erreurs/404.php';
     }
 }

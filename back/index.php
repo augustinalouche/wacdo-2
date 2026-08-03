@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Wacdo\Controleurs\Api\CommandesApiControleur;
+use Wacdo\Controleurs\Api\MenusApiControleur;
+use Wacdo\Controleurs\Api\ProduitsApiControleur;
 use Wacdo\Controleurs\AuthControleur;
 use Wacdo\Controleurs\CommandesControleur;
 use Wacdo\Controleurs\MenusControleur;
@@ -38,6 +41,7 @@ set_exception_handler(static function (\Throwable $exception) use ($modeDev): vo
 });
 
 $routeur = new Routeur();
+$routeur->autoriserCorsDepuis($config['cors']['origine_autorisee'] ?? '*');
 
 $routeur->get('/', static function (): void {
     header('Location: ' . Routeur::urlBase() . '/tableau-de-bord');
@@ -81,6 +85,9 @@ $routeur->post('/commandes', [CommandesControleur::class, 'creer']);
 $routeur->post('/commandes/{id}/preparer', [CommandesControleur::class, 'marquerPreparee']);
 $routeur->post('/commandes/{id}/livrer', [CommandesControleur::class, 'marquerLivree']);
 
-// Routes suivantes enrichies au fil de l'EPIC 8 (API).
+// EPIC 8 — API consommee par le front (borne)
+$routeur->get('/api/produits', [ProduitsApiControleur::class, 'index']);
+$routeur->get('/api/menus', [MenusApiControleur::class, 'index']);
+$routeur->post('/api/commandes', [CommandesApiControleur::class, 'creer']);
 
 $routeur->distribuer($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

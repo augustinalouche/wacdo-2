@@ -111,12 +111,12 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 8 — Bloc 2 : API
 
-- [ ] **T08.1** — Endpoint `GET /api/produits` (avec filtre par catégorie optionnel) → JSON conforme à la structure T01.5
-- [ ] **T08.2** — Endpoint `GET /api/menus` → JSON détaillé (composition incluse)
-- [ ] **T08.3** — Endpoint `POST /api/commandes` : réception JSON, validation serveur complète, insertion en base
-- [ ] **T08.4** — Réponses HTTP cohérentes (200/201/400/401/403/404/500) + corps JSON d'erreur structuré
-- [ ] **T08.5** — Gestion des CORS si Front et API sont sur des origines différentes
-- [ ] **T08.6** — Accusé de réception renvoyé au Front (numéro de commande, confirmation)
+- [x] **T08.1** — Endpoint `GET /api/produits` (avec filtre par catégorie optionnel) → JSON conforme à la structure T01.5 *(voir `Controleurs/Api/ProduitsApiControleur.php`, filtre `?categorie=`)*
+- [x] **T08.2** — Endpoint `GET /api/menus` → JSON détaillé (composition incluse) *(voir `Controleurs/Api/MenusApiControleur.php` ; sauces + menus, même structure que `front/data/menus.json`)*
+- [x] **T08.3** — Endpoint `POST /api/commandes` : réception JSON, validation serveur complète, insertion en base *(voir `Controleurs/Api/CommandesApiControleur.php`, réutilise `CommandeDepot::creer()` de l'`EPIC 7` — prix toujours recalculé serveur)*
+- [x] **T08.4** — Réponses HTTP cohérentes (200/201/400/401/403/404/500) + corps JSON d'erreur structuré *(voir `ApiControleur::echec()`, 404 JSON dédié pour `/api/*` dans `Routeur`)*
+- [x] **T08.5** — Gestion des CORS si Front et API sont sur des origines différentes *(voir `Routeur::autoriserCorsDepuis()`, préflight `OPTIONS` géré, origine configurable via `config['cors']`)*
+- [x] **T08.6** — Accusé de réception renvoyé au Front (numéro de commande, confirmation) *(réponse `201` avec `succes`/`commandeId`/`numero`/`message`)*
 
 ---
 

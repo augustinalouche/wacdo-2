@@ -23,4 +23,11 @@ return [
         'nom' => 'wacdo_session',
         'duree_minutes' => 120,
     ],
+
+    // Origine autorisee a appeler l'API ("/api/*") en cross-origin (T08.5).
+    // "*" en developpement ; a restreindre a l'URL exacte du front en production
+    // (ex. "https://wacdo-front.exemple.com").
+    'cors' => [
+        'origine_autorisee' => '*',
+    ],
 ];

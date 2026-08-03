@@ -26,43 +26,43 @@ INSERT INTO statut (libelle) VALUES
 -- Sauces
 -- ---------------------------------------------------------------------------
 INSERT INTO sauce (nom) VALUES
-  ('Ketchup'), ('Mayonnaise'), ('Barbecue'), ('Algerienne'), ('Moutarde');
+  ('Ketchup'), ('Mayonnaise'), ('Barbecue'), ('Algérienne'), ('Moutarde');
 
 -- ---------------------------------------------------------------------------
 -- Produits — burgers (prix fixe, sans taille)
 -- ---------------------------------------------------------------------------
 INSERT INTO produit (nom, description, prix, categorie_id, image, disponible) VALUES
-  ('Le Classique', 'Steak hache, cheddar, oignons, cornichons, sauce burger', 4.90,
+  ('Le Classique', 'Steak haché, cheddar, oignons, cornichons, sauce burger', 4.90,
     (SELECT id FROM categorie WHERE nom = 'burger'), 'burger-classique.png', 1),
-  ('Le Bacon Crousti', 'Steak hache, bacon fume, cheddar, sauce barbecue', 5.90,
+  ('Le Bacon Crousti', 'Steak haché, bacon fumé, cheddar, sauce barbecue', 5.90,
     (SELECT id FROM categorie WHERE nom = 'burger'), 'burger-bacon.png', 1),
-  ('Le Poulet Croustillant', 'Filet de poulet pane, salade, tomate, sauce fromagere', 5.50,
+  ('Le Poulet Croustillant', 'Filet de poulet pané, salade, tomate, sauce fromagère', 5.50,
     (SELECT id FROM categorie WHERE nom = 'burger'), 'burger-poulet.png', 1),
-  ('Le Veggie', 'Galette de legumes, cheddar, salade, sauce curry doux', 5.20,
+  ('Le Veggie', 'Galette de légumes, cheddar, salade, sauce curry doux', 5.20,
     (SELECT id FROM categorie WHERE nom = 'burger'), 'burger-veggie.png', 1);
 
 -- ---------------------------------------------------------------------------
 -- Produits — desserts (prix fixe, sans taille)
 -- ---------------------------------------------------------------------------
 INSERT INTO produit (nom, description, prix, categorie_id, image, disponible) VALUES
-  ('Cookie Pepites', 'Cookie moelleux aux pepites de chocolat', 1.90,
+  ('Cookie Pépites', 'Cookie moelleux aux pépites de chocolat', 1.90,
     (SELECT id FROM categorie WHERE nom = 'dessert'), 'cookie.png', 1),
-  ('Fondant au Chocolat', 'Coeur coulant au chocolat noir', 2.90,
+  ('Fondant au Chocolat', 'Cœur coulant au chocolat noir', 2.90,
     (SELECT id FROM categorie WHERE nom = 'dessert'), 'fondant.png', 1);
 
 -- ---------------------------------------------------------------------------
 -- Produits — accompagnements et boissons (prix NULL, defini par taille)
 -- ---------------------------------------------------------------------------
 INSERT INTO produit (nom, description, prix, categorie_id, image, disponible) VALUES
-  ('Frites', 'Pommes de terre fraiches, cuisson croustillante', NULL,
+  ('Frites', 'Pommes de terre fraîches, cuisson croustillante', NULL,
     (SELECT id FROM categorie WHERE nom = 'accompagnement'), 'frites.png', 1),
-  ('Salade Verte', 'Melange de jeunes pousses, vinaigrette legere', NULL,
+  ('Salade Verte', 'Mélange de jeunes pousses, vinaigrette légère', NULL,
     (SELECT id FROM categorie WHERE nom = 'accompagnement'), 'salade.png', 1),
-  ('Cola', 'Boisson gazeuse rafraichissante', NULL,
+  ('Cola', 'Boisson gazeuse rafraîchissante', NULL,
     (SELECT id FROM categorie WHERE nom = 'boisson'), 'cola.png', 1),
-  ('Eau Minerale', 'Eau plate en bouteille', NULL,
+  ('Eau Minérale', 'Eau plate en bouteille', NULL,
     (SELECT id FROM categorie WHERE nom = 'boisson'), 'eau.png', 1),
-  ('Jus d''Orange', '100% pur jus, sans sucres ajoutes', NULL,
+  ('Jus d''Orange', '100% pur jus, sans sucres ajoutés', NULL,
     (SELECT id FROM categorie WHERE nom = 'boisson'), 'jus-orange.png', 1);
 
 -- ---------------------------------------------------------------------------
@@ -75,8 +75,8 @@ INSERT INTO produit_taille (produit_id, taille_id, prix) VALUES
   ((SELECT id FROM produit WHERE nom = 'Salade Verte'), (SELECT id FROM taille WHERE libelle = 'Grande'), 2.90),
   ((SELECT id FROM produit WHERE nom = 'Cola'), (SELECT id FROM taille WHERE libelle = 'Petite'), 1.90),
   ((SELECT id FROM produit WHERE nom = 'Cola'), (SELECT id FROM taille WHERE libelle = 'Grande'), 2.40),
-  ((SELECT id FROM produit WHERE nom = 'Eau Minerale'), (SELECT id FROM taille WHERE libelle = 'Petite'), 1.60),
-  ((SELECT id FROM produit WHERE nom = 'Eau Minerale'), (SELECT id FROM taille WHERE libelle = 'Grande'), 2.10),
+  ((SELECT id FROM produit WHERE nom = 'Eau Minérale'), (SELECT id FROM taille WHERE libelle = 'Petite'), 1.60),
+  ((SELECT id FROM produit WHERE nom = 'Eau Minérale'), (SELECT id FROM taille WHERE libelle = 'Grande'), 2.10),
   ((SELECT id FROM produit WHERE nom = 'Jus d''Orange'), (SELECT id FROM taille WHERE libelle = 'Petite'), 2.00),
   ((SELECT id FROM produit WHERE nom = 'Jus d''Orange'), (SELECT id FROM taille WHERE libelle = 'Grande'), 2.50);
 

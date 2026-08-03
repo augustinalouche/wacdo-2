@@ -1,0 +1,109 @@
+/* Wacdo — back-office. Mêmes tokens que le front (docs/maquette/modernist.css)
+   pour une identité visuelle cohérente entre les deux blocs. */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
+
+:root {
+  --couleur-fond: #f3f2f2;
+  --couleur-surface: #ffffff;
+  --couleur-texte: #201e1d;
+  --couleur-accent: #ec3013;
+  --couleur-accent-fonce: #ae1800;
+  --couleur-accent-clair: #ffe0d9;
+  --couleur-divider: rgba(32, 30, 29, 0.4);
+  --couleur-neutre-700: #605d5d;
+  --espace-2: 8px;
+  --espace-3: 12px;
+  --espace-4: 16px;
+  --espace-6: 24px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+  font-family: "Archivo", system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+h1, h2 { font-weight: 800; letter-spacing: -0.01em; }
+
+a { color: var(--couleur-accent); }
+
+.entete-admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espace-3) var(--espace-6);
+  background: var(--couleur-surface);
+  border-bottom: 2px solid var(--couleur-divider);
+}
+
+.entete-admin__marque { font-weight: 800; font-size: 20px; }
+
+.page-connexion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.carte-connexion {
+  background: var(--couleur-surface);
+  border: 2px solid var(--couleur-divider);
+  padding: var(--espace-6);
+  width: 100%;
+  max-width: 360px;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--espace-4);
+}
+
+.champ label { font-weight: 600; font-size: 14px; }
+
+.champ input {
+  padding: var(--espace-3);
+  border: 2px solid var(--couleur-divider);
+  font: inherit;
+  font-size: 16px;
+}
+.champ input:focus-visible { outline: 2px solid var(--couleur-accent); border-color: var(--couleur-accent); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--espace-3) var(--espace-4);
+  background: var(--couleur-accent);
+  color: #fff;
+  border: none;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn:hover { background: var(--couleur-accent-fonce); }
+
+.message-erreur {
+  color: var(--couleur-accent-fonce);
+  background: var(--couleur-accent-clair);
+  border: 2px solid var(--couleur-accent);
+  padding: var(--espace-2) var(--espace-3);
+  font-size: 14px;
+  margin: 0 0 var(--espace-4);
+}
+
+.contenu-admin { padding: var(--espace-6); max-width: 900px; margin: 0 auto; }
+
+.comptes-test-demo {
+  color: var(--couleur-neutre-700);
+  font-size: 13px;
+  margin-top: var(--espace-4);
+}

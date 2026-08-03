@@ -43,4 +43,13 @@ abstract class Controleur
         header('Location: ' . $url);
         exit;
     }
+
+    /**
+     * Redirige vers un chemin applicatif (ex. "/tableau-de-bord"), préfixé
+     * automatiquement par l'URL de base du déploiement.
+     */
+    protected function redirigerVers(string $chemin): void
+    {
+        $this->rediriger(Routeur::urlBase() . $chemin);
+    }
 }

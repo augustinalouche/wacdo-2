@@ -4,7 +4,7 @@ Bloc 2 du projet Wacdo : back-office (gestion produits/menus/utilisateurs/comman
 
 ## Statut
 
-🚧 En cours de développement — fondations MVC (voir `EPIC 3` et suivants du `BACKLOG.md` à la racine).
+🚧 En cours de développement — fondations MVC + authentification/rôles opérationnelles (voir `EPIC 3`/`EPIC 4` et suivants du `BACKLOG.md` à la racine).
 
 ## Stack
 
@@ -39,8 +39,10 @@ Insérés via `sql/seed.sql`. Mot de passe identique pour les 3 comptes : `Wacdo
 
 ```
 back/
-├── index.php           # front controller (point d'entrée unique)
-├── .htaccess           # réécrit tout vers index.php
+├── index.php           # front controller (point d'entrée unique, déclare les routes)
+├── .htaccess           # réécrit tout vers index.php (sauf fichiers/dossiers réels)
+├── assets/
+│   └── css/admin.css    # styles du back-office (mêmes tokens que le front)
 ├── config/
 │   ├── config.php          # config locale (hors dépôt public)
 │   └── config.example.php  # modèle à copier
@@ -49,11 +51,22 @@ back/
 │   └── seed.sql         # données de test
 └── src/
     ├── Core/            # Autoloader, Database (PDO), Routeur, Controleur et Modele abstraits
-    ├── Controleurs/      # (à venir — EPIC 4 et suivants)
-    ├── Modeles/          # (à venir)
+    ├── Securite/         # Auth (session, contrôle d'accès par rôle) et Csrf
+    ├── Controleurs/       # AuthControleur, TableauDeBordControleur, UtilisateursControleur (squelette)
+    ├── Modeles/            # Utilisateur (abstrait) + Administrateur/Preparateur/AgentAccueil, UtilisateurDepot
     └── Vues/
-        └── erreurs/      # pages 404 / 500
+        ├── auth/connexion.php
+        ├── tableau-de-bord.php
+        ├── utilisateurs/liste.php   # squelette EPIC 6
+        └── erreurs/                 # pages 403 / 404 / 500
 ```
+
+## Authentification & rôles (`EPIC 4`)
+
+- `POST /connexion` vérifie l'email + mot de passe (haché en base, `password_verify`) et le jeton CSRF, puis crée la session (`Securite\Auth::connecter`, avec régénération de l'identifiant de session).
+- `POST /deconnexion` détruit la session.
+- Chaque rôle (`Administrateur`, `Preparateur`, `AgentAccueil`) est une sous-classe de `Utilisateur` qui définit ses propres modules autorisés (`modulesAutorises()`) — c'est ce polymorphisme qui pilote le contrôle d'accès.
+- `Securite\Auth::exigerConnexion()` protège une route (redirection vers `/connexion` si non authentifié) ; `Securite\Auth::exigerModule('xxx')` protège en plus par rôle (403 si le module n'est pas autorisé). Démonstration sur `GET /utilisateurs`, réservé à l'Administration.
 
 ## Endpoints API
 

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Wacdo\Controleurs\AuthControleur;
+use Wacdo\Controleurs\TableauDeBordControleur;
+use Wacdo\Controleurs\UtilisateursControleur;
 use Wacdo\Core\Autoloader;
 use Wacdo\Core\Routeur;
 
@@ -33,17 +36,19 @@ set_exception_handler(static function (\Throwable $exception) use ($modeDev): vo
 
 $routeur = new Routeur();
 
-// Routes de base — enrichies au fil des EPICs 4 a 8 (auth, CRUD, commandes, API).
 $routeur->get('/', static function (): void {
-    header('Content-Type: text/plain; charset=utf-8');
-    echo "Wacdo back-office — en construction.\n";
-
-    try {
-        \Wacdo\Core\Database::connexion();
-        echo "Connexion base de donnees : OK\n";
-    } catch (\Throwable $exception) {
-        echo "Connexion base de donnees : ECHEC — " . $exception->getMessage() . "\n";
-    }
+    header('Location: ' . Routeur::urlBase() . '/tableau-de-bord');
 });
+
+// EPIC 4 — Authentification & rôles
+$routeur->get('/connexion', [AuthControleur::class, 'formulaire']);
+$routeur->post('/connexion', [AuthControleur::class, 'connecter']);
+$routeur->post('/deconnexion', [AuthControleur::class, 'deconnecter']);
+$routeur->get('/tableau-de-bord', [TableauDeBordControleur::class, 'afficher']);
+
+// Squelette du module Utilisateurs (EPIC 6) — sert ici de demo au controle d'acces par role.
+$routeur->get('/utilisateurs', [UtilisateursControleur::class, 'liste']);
+
+// Routes suivantes enrichies au fil des EPICs 5 a 8 (CRUD, commandes, API).
 
 $routeur->distribuer($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

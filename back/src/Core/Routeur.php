@@ -57,6 +57,16 @@ final class Routeur
         $this->page404();
     }
 
+    /**
+     * URL de base de l'application (ex. "/wacdo2/back"), à préfixer devant
+     * tout lien/redirection généré côté serveur pour rester portable quel
+     * que soit le dossier de déploiement.
+     */
+    public static function urlBase(): string
+    {
+        return rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+    }
+
     private function convertirEnRegex(string $chemin): string
     {
         $motif = preg_replace('#\{([a-zA-Z_][a-zA-Z0-9_]*)\}#', '(?P<$1>[^/]+)', rtrim($chemin, '/'));
@@ -86,7 +96,7 @@ final class Routeur
      */
     private function retirerCheminDeBase(string $uri): string
     {
-        $base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+        $base = self::urlBase();
 
         if ($base !== '' && str_starts_with($uri, $base)) {
             $uri = substr($uri, strlen($base));

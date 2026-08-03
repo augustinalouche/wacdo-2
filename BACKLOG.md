@@ -66,12 +66,12 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 4 — Bloc 2 : Authentification & rôles
 
-- [ ] **T04.1** — Modèle `Utilisateur` (classe de base) avec sous-classes ou attribut rôle (Administration / Préparation / Accueil) — mise en œuvre de l'héritage
-- [ ] **T04.2** — Hashage des mots de passe (`password_hash`/`password_verify`)
-- [ ] **T04.3** — Page/contrôleur de connexion (login) + création de session
-- [ ] **T04.4** — Déconnexion (destruction de session)
-- [ ] **T04.5** — Middleware/vérification d'accès par rôle sur les routes du back-office (redirection ou 403 si non autorisé)
-- [ ] **T04.6** — Protection CSRF sur les formulaires sensibles
+- [x] **T04.1** — Modèle `Utilisateur` (classe de base) avec sous-classes ou attribut rôle (Administration / Préparation / Accueil) — mise en œuvre de l'héritage *(voir `back/src/Modeles/Utilisateur.php` + `Administrateur`/`Preparateur`/`AgentAccueil`, dépôt `UtilisateurDepot`)*
+- [x] **T04.2** — Hashage des mots de passe (`password_hash`/`password_verify`) *(voir `UtilisateurDepot::creer`, `Utilisateur::verifierMotDePasse`)*
+- [x] **T04.3** — Page/contrôleur de connexion (login) + création de session *(voir `AuthControleur`, `Vues/auth/connexion.php`)*
+- [x] **T04.4** — Déconnexion (destruction de session) *(voir `AuthControleur::deconnecter`, `Auth::deconnecter`)*
+- [x] **T04.5** — Middleware/vérification d'accès par rôle sur les routes du back-office (redirection ou 403 si non autorisé) *(voir `Securite/Auth::exigerConnexion`/`exigerModule`, testé sur `/utilisateurs`)*
+- [x] **T04.6** — Protection CSRF sur les formulaires sensibles *(voir `Securite/Csrf`, formulaire de connexion)*
 
 ---
 

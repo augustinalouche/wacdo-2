@@ -15,7 +15,7 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 1 — Conception (avant tout code)
 
-- [x] **T01.1** — Lister les entités et leurs attributs : Utilisateur, Produit, Menu, CompositionMenu, Commande, LigneCommande, Statut, Catégorie *(voir `docs/01-modele-donnees.md`)*
+- [x] **T01.1** — Lister les entités et leurs attributs : Utilisateur, Produit, Menu, CompositionMenu, Commande, LigneCommande, Statut, Catégorie *(voir `docs/conception/01-entites-et-relations.md`)*
 - [x] **T01.2** — Définir les relations et cardinalités entre entités (1-N, N-N) et les contraintes (clés étrangères, unicité)
 - [x] **T01.3** — Réaliser le schéma conceptuel de données (MCD)
 - [x] **T01.4** — Décliner le schéma physique de données (MPD) : tables, colonnes, types, clés primaires/étrangères

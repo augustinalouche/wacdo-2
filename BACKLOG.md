@@ -28,26 +28,26 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 2 — Bloc 1 : Front-end (borne) — mode JSON statique
 
-- [ ] **T02.1** — Squelette HTML sémantique des pages (accueil/catalogue, panier, récapitulatif) avec balises `header`/`nav`/`main`/`section`/`footer`
-- [ ] **T02.2** — Intégration CSS de base à partir de la maquette (grille, typographie, couleurs) ciblant 1920×1080
-- [ ] **T02.3** — Media queries / mise en page responsive pour résolutions inférieures (tablette, mobile si applicable)
+- [x] **T02.1** — Squelette HTML sémantique des pages (accueil/catalogue, panier, récapitulatif) avec balises `header`/`nav`/`main`/`section`/`footer` *(voir `front/index.html`, appli mono-page à 5 écrans)*
+- [x] **T02.2** — Intégration CSS de base à partir de la maquette (grille, typographie, couleurs) ciblant 1920×1080 *(voir `front/css/style.css`, tokens repris de `docs/maquette/modernist.css`)*
+- [x] **T02.3** — Media queries / mise en page responsive pour résolutions inférieures (tablette, mobile si applicable) *(3 breakpoints dans `front/css/style.css`)*
 - [x] **T02.4** — Créer/placer les fichiers `produits.json` et `menus.json` sur le serveur (structure définie en T01.5) *(voir `front/data/`)*
-- [ ] **T02.5** — Fonction AJAX (`fetch`) de récupération des produits + affichage dynamique du catalogue
-- [ ] **T02.6** — Fonction AJAX de récupération des menus + affichage dynamique
-- [ ] **T02.7** — Filtrage/affichage par catégorie (si prévu dans la maquette)
-- [ ] **T02.8** — Logique panier : ajouter un produit simple, incrémenter/décrémenter quantité
-- [ ] **T02.9** — Logique panier : composer un menu (choix burger + frites/salade + boisson + sauce)
-- [ ] **T02.10** — Gestion des tailles (accompagnement/boisson) avec supplément +0,50 € appliqué au prix
-- [ ] **T02.11** — Calcul et affichage du total en temps réel (unitaire + panier global)
-- [ ] **T02.12** — Vue panier détaillée : modifier quantité, supprimer une ligne
-- [ ] **T02.13** — Formulaire de saisie du numéro de commande + validation JS (champ requis, format)
-- [ ] **T02.14** — Écran récapitulatif final de la commande avant envoi
-- [ ] **T02.15** — Construction du JSON de commande final et envoi (vers mock/API) + gestion de l'accusé de réception
-- [ ] **T02.16** — Gestion des erreurs côté front (produit indisponible, échec réseau AJAX, panier vide)
-- [ ] **T02.17** — Passe accessibilité : `alt` sur images, labels de formulaire, contrastes, focus clavier, ARIA si besoin
-- [ ] **T02.18** — Passe SEO/sémantique : title, meta description, hiérarchie des titres
+- [x] **T02.5** — Fonction AJAX (`fetch`) de récupération des produits + affichage dynamique du catalogue *(voir `front/js/api.js`, `front/js/render.js`)*
+- [x] **T02.6** — Fonction AJAX de récupération des menus + affichage dynamique *(idem)*
+- [x] **T02.7** — Filtrage/affichage par catégorie (si prévu dans la maquette) *(onglets `.filtre` dans `front/js/app.js`)*
+- [x] **T02.8** — Logique panier : ajouter un produit simple, incrémenter/décrémenter quantité *(voir `front/js/panier.js`)*
+- [x] **T02.9** — Logique panier : composer un menu (choix burger + frites/salade + boisson + sauce) *(modale de composition, `front/js/app.js`)*
+- [x] **T02.10** — Gestion des tailles (accompagnement/boisson) avec supplément +0,50 € appliqué au prix
+- [x] **T02.11** — Calcul et affichage du total en temps réel (unitaire + panier global)
+- [x] **T02.12** — Vue panier détaillée : modifier quantité, supprimer une ligne
+- [x] **T02.13** — Formulaire de saisie du numéro de commande + validation JS (champ requis, format)
+- [x] **T02.14** — Écran récapitulatif final de la commande avant envoi
+- [x] **T02.15** — Construction du JSON de commande final et envoi (vers mock/API) + gestion de l'accusé de réception *(simulation locale en attendant `EPIC 8`/`T10.1`)*
+- [x] **T02.16** — Gestion des erreurs côté front (produit indisponible, échec réseau AJAX, panier vide)
+- [x] **T02.17** — Passe accessibilité : `alt` sur images, labels de formulaire, contrastes, focus clavier, ARIA si besoin
+- [x] **T02.18** — Passe SEO/sémantique : title, meta description, hiérarchie des titres
 - [ ] **T02.19** — Vérification compatibilité navigateurs récents (Chrome/Firefox/Edge)
-- [ ] **T02.20** — Rédiger le README front (installation, structure des données JSON, scénarios de test)
+- [x] **T02.20** — Rédiger le README front (installation, structure des données JSON, scénarios de test) *(voir `front/README.md`)*
 
 ---
 

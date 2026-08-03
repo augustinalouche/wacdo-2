@@ -1,0 +1,435 @@
+/* Wacdo — Front borne. Design repris des tokens de la maquette (docs/maquette/modernist.css) :
+   fond clair, rouge accent, typo Archivo, angles droits, rythme marqué par des filets 2px. */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
+
+:root {
+  --couleur-fond: #f3f2f2;
+  --couleur-surface: #ffffff;
+  --couleur-texte: #201e1d;
+  --couleur-accent: #ec3013;
+  --couleur-accent-fonce: #ae1800;
+  --couleur-accent-clair: #ffe0d9;
+  --couleur-divider: rgba(32, 30, 29, 0.4);
+  --couleur-neutre-200: #eae7e7;
+  --couleur-neutre-400: #bab6b6;
+  --couleur-neutre-700: #605d5d;
+
+  --police-titre: "Archivo", system-ui, sans-serif;
+  --police-corps: "Archivo", system-ui, sans-serif;
+
+  --espace-1: 4px;
+  --espace-2: 8px;
+  --espace-3: 12px;
+  --espace-4: 16px;
+  --espace-6: 24px;
+  --espace-8: 32px;
+}
+
+/* — Reset de base — */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+  font-family: var(--police-corps);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--espace-3);
+}
+
+h1 { font-size: clamp(28px, 3vw, 40px); }
+h2 { font-size: clamp(20px, 2.2vw, 26px); }
+h3 { font-size: 18px; margin-bottom: var(--espace-1); }
+
+p { margin: 0 0 var(--espace-3); }
+
+img { display: block; max-width: 100%; }
+
+button { font-family: inherit; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 3px solid var(--couleur-accent);
+  outline-offset: 2px;
+}
+
+.lien-evitement {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--couleur-accent);
+  color: #fff;
+  padding: var(--espace-2) var(--espace-4);
+  z-index: 100;
+}
+.lien-evitement:focus {
+  left: var(--espace-2);
+  top: var(--espace-2);
+}
+
+/* — En-tête — */
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-4);
+  padding: var(--espace-3) var(--espace-6);
+  background: var(--couleur-surface);
+  border-bottom: 2px solid var(--couleur-divider);
+}
+
+.entete__marque {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-2);
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 22px;
+  margin: 0;
+}
+
+.entete__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: var(--couleur-accent);
+  color: #fff;
+  font-weight: 800;
+}
+
+.bouton-panier {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-2);
+  padding: var(--espace-2) var(--espace-4);
+  background: var(--couleur-texte);
+  color: #fff;
+  border: none;
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+}
+.bouton-panier:hover { background: var(--couleur-accent-fonce); }
+
+.bouton-panier__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--couleur-accent);
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.bouton-panier__total { font-weight: 800; }
+
+/* — Contenu principal / écrans — */
+#contenu-principal {
+  padding: var(--espace-6);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.ecran-confirmation {
+  text-align: center;
+  padding-top: var(--espace-8);
+}
+
+/* — Filtres catégorie — */
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espace-2);
+  margin-bottom: var(--espace-6);
+}
+
+.filtre {
+  padding: var(--espace-2) var(--espace-4);
+  background: var(--couleur-surface);
+  border: 2px solid var(--couleur-divider);
+  color: var(--couleur-texte);
+  font-family: var(--police-titre);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.filtre:hover { border-color: var(--couleur-accent); }
+.filtre.est-actif {
+  background: var(--couleur-accent);
+  border-color: var(--couleur-accent);
+  color: #fff;
+}
+
+/* — Grille produits — */
+.grille-produits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espace-6);
+}
+
+.etat-chargement, .etat-vide {
+  color: var(--couleur-neutre-700);
+}
+
+.carte-produit {
+  display: flex;
+  flex-direction: column;
+  background: var(--couleur-surface);
+  border: 2px solid var(--couleur-divider);
+}
+
+.carte-produit img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: grayscale(0.15);
+}
+
+.carte-produit__corps {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--espace-4);
+}
+
+.carte-produit__description {
+  color: var(--couleur-neutre-700);
+  font-size: 14px;
+  flex: 1;
+}
+
+.carte-produit__prix {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: var(--espace-3);
+}
+
+.carte-produit--indisponible {
+  opacity: 0.55;
+}
+
+.carte-produit--menu {
+  border-color: var(--couleur-accent);
+}
+
+/* — Boutons — */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-2);
+  padding: var(--espace-3) var(--espace-4);
+  border: 2px solid transparent;
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primaire {
+  background: var(--couleur-accent);
+  color: #fff;
+}
+.btn-primaire:hover:not(:disabled) { background: var(--couleur-accent-fonce); }
+.btn-primaire:disabled { background: var(--couleur-neutre-400); cursor: not-allowed; }
+
+.btn-secondaire {
+  background: transparent;
+  border-color: var(--couleur-texte);
+  color: var(--couleur-texte);
+}
+.btn-secondaire:hover { background: var(--couleur-neutre-200); }
+
+.btn-block { width: 100%; }
+
+.actions-ecran {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espace-4);
+  margin-top: var(--espace-6);
+  flex-wrap: wrap;
+}
+
+/* — Formulaires — */
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-1);
+  max-width: 320px;
+  margin-bottom: var(--espace-4);
+}
+
+.champ label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.champ input {
+  padding: var(--espace-3);
+  border: 2px solid var(--couleur-divider);
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--couleur-surface);
+  color: var(--couleur-texte);
+}
+.champ input:focus-visible { border-color: var(--couleur-accent); }
+
+.champ__erreur, .message-erreur {
+  color: var(--couleur-accent-fonce);
+  background: var(--couleur-accent-clair);
+  border: 2px solid var(--couleur-accent);
+  padding: var(--espace-2) var(--espace-3);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* — Panier — */
+.ligne-panier {
+  display: grid;
+  grid-template-columns: 72px 1fr auto auto;
+  align-items: center;
+  gap: var(--espace-3);
+  padding: var(--espace-3) 0;
+  border-bottom: 2px solid var(--couleur-divider);
+}
+
+.ligne-panier img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+}
+
+.ligne-panier__nom { font-weight: 800; font-family: var(--police-titre); }
+.ligne-panier__details { font-size: 13px; color: var(--couleur-neutre-700); }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-2);
+}
+
+.stepper button {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--couleur-divider);
+  background: var(--couleur-surface);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.stepper button:hover { border-color: var(--couleur-accent); }
+
+.ligne-panier__prix { font-weight: 800; text-align: right; min-width: 90px; }
+
+.bouton-supprimer {
+  background: none;
+  border: none;
+  color: var(--couleur-accent-fonce);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.panier-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--espace-4);
+  margin-top: var(--espace-4);
+  border-top: 2px solid var(--couleur-texte);
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+/* — Récapitulatif — */
+.recap-ligne {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--espace-2) 0;
+  border-bottom: 1px solid var(--couleur-divider);
+}
+
+/* — Modales — */
+dialog {
+  border: none;
+  padding: var(--espace-6);
+  max-width: 560px;
+  width: calc(100% - var(--espace-6));
+  background: var(--couleur-surface);
+}
+dialog::backdrop { background: rgba(32, 30, 29, 0.6); }
+
+fieldset {
+  border: 2px solid var(--couleur-divider);
+  margin-bottom: var(--espace-4);
+  padding: var(--espace-3);
+}
+legend {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  padding: 0 var(--espace-2);
+}
+
+.option-radio {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-2);
+  padding: var(--espace-1) 0;
+}
+
+.modale__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espace-3);
+  margin-top: var(--espace-4);
+}
+
+/* — Pied de page — */
+.pied-de-page {
+  text-align: center;
+  padding: var(--espace-6);
+  color: var(--couleur-neutre-700);
+  font-size: 13px;
+}
+
+/* — Responsive — */
+@media (max-width: 900px) {
+  .entete { padding: var(--espace-2) var(--espace-4); }
+  .bouton-panier span:nth-child(2) { display: none; }
+  #contenu-principal { padding: var(--espace-4); }
+  .grille-produits { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--espace-4); }
+}
+
+@media (max-width: 600px) {
+  .grille-produits { grid-template-columns: 1fr 1fr; }
+  .ligne-panier { grid-template-columns: 56px 1fr; grid-template-rows: auto auto; }
+  .ligne-panier img { width: 56px; height: 56px; }
+  .ligne-panier__prix { grid-column: 2; justify-self: end; }
+  .actions-ecran { flex-direction: column-reverse; }
+  .actions-ecran .btn { width: 100%; }
+}
+
+@media (max-width: 420px) {
+  .grille-produits { grid-template-columns: 1fr; }
+}

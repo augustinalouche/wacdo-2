@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wacdo — Bornes de commande</title>
+  <meta name="description" content="Commandez vos burgers, menus, accompagnements, boissons et desserts Wacdo directement sur la borne tactile.">
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="lien-evitement" href="#contenu-principal">Aller au contenu</a>
+
+  <header class="entete">
+    <p class="entete__marque">
+      <span class="entete__logo" aria-hidden="true">W</span>
+      Wacdo
+    </p>
+    <button type="button" id="bouton-panier" class="bouton-panier">
+      <span aria-hidden="true">🛒</span>
+      <span>Mon panier</span>
+      <span id="panier-nb-articles" class="bouton-panier__badge" aria-live="polite">0</span>
+      <span id="panier-total" class="bouton-panier__total">0,00&nbsp;€</span>
+    </button>
+  </header>
+
+  <main id="contenu-principal">
+
+    <!-- Écran 1 — Catalogue -->
+    <section id="ecran-catalogue" class="ecran" aria-labelledby="titre-catalogue">
+      <h1 id="titre-catalogue">Notre carte</h1>
+
+      <nav class="filtres" aria-label="Filtrer la carte par catégorie">
+        <button type="button" class="filtre est-actif" data-categorie="tous" aria-pressed="true">Tout</button>
+        <button type="button" class="filtre" data-categorie="menu" aria-pressed="false">Menus</button>
+        <button type="button" class="filtre" data-categorie="burger" aria-pressed="false">Burgers</button>
+        <button type="button" class="filtre" data-categorie="accompagnement" aria-pressed="false">Accompagnements</button>
+        <button type="button" class="filtre" data-categorie="boisson" aria-pressed="false">Boissons</button>
+        <button type="button" class="filtre" data-categorie="dessert" aria-pressed="false">Desserts</button>
+      </nav>
+
+      <p id="message-catalogue" class="message-erreur" role="alert" hidden></p>
+
+      <div id="grille-produits" class="grille-produits" aria-live="polite">
+        <p class="etat-chargement">Chargement de la carte…</p>
+      </div>
+    </section>
+
+    <!-- Écran 2 — Panier -->
+    <section id="ecran-panier" class="ecran" aria-labelledby="titre-panier" hidden>
+      <h1 id="titre-panier">Mon panier</h1>
+
+      <div id="panier-contenu" aria-live="polite"></div>
+
+      <div class="actions-ecran">
+        <button type="button" class="btn btn-secondaire" data-action="retour-catalogue">← Continuer mes achats</button>
+        <button type="button" class="btn btn-primaire" id="bouton-valider-panier" disabled>Valider ma commande</button>
+      </div>
+    </section>
+
+    <!-- Écran 3 — Numéro de commande -->
+    <section id="ecran-numero" class="ecran" aria-labelledby="titre-numero" hidden>
+      <h1 id="titre-numero">Numéro de commande</h1>
+      <p>Choisissez un numéro : il vous permettra de récupérer votre commande au comptoir (le paiement n'est pas géré sur cette borne).</p>
+
+      <form id="formulaire-numero" novalidate>
+        <div class="champ">
+          <label for="champ-numero">Numéro souhaité (entre 1 et 999)</label>
+          <input type="number" id="champ-numero" name="numero" min="1" max="999" step="1" required inputmode="numeric" autocomplete="off">
+          <p class="champ__erreur" id="erreur-numero" role="alert" hidden></p>
+        </div>
+
+        <div class="actions-ecran">
+          <button type="button" class="btn btn-secondaire" data-action="retour-panier">← Retour au panier</button>
+          <button type="submit" class="btn btn-primaire">Continuer</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Écran 4 — Récapitulatif -->
+    <section id="ecran-recap" class="ecran" aria-labelledby="titre-recap" hidden>
+      <h1 id="titre-recap">Récapitulatif de la commande</h1>
+
+      <div id="recap-contenu" aria-live="polite"></div>
+
+      <p id="message-envoi" class="message-erreur" role="alert" hidden></p>
+
+      <div class="actions-ecran">
+        <button type="button" class="btn btn-secondaire" data-action="retour-numero">← Modifier le numéro</button>
+        <button type="button" class="btn btn-primaire" id="bouton-confirmer-commande">Confirmer la commande</button>
+      </div>
+    </section>
+
+    <!-- Écran 5 — Confirmation -->
+    <section id="ecran-confirmation" class="ecran ecran-confirmation" aria-labelledby="titre-confirmation" hidden>
+      <h1 id="titre-confirmation">Commande enregistrée !</h1>
+      <p>Votre numéro de commande : <strong id="confirmation-numero"></strong></p>
+      <p>Présentez-vous au comptoir avec ce numéro pour la récupérer.</p>
+      <button type="button" class="btn btn-primaire" data-action="nouvelle-commande">Passer une nouvelle commande</button>
+    </section>
+
+  </main>
+
+  <footer class="pied-de-page">
+    <p>Wacdo — Bornes de commande numériques. Aucune donnée de paiement n'est collectée sur cette borne.</p>
+  </footer>
+
+  <!-- Modale : composition d'un menu -->
+  <dialog id="modale-menu" aria-labelledby="titre-modale-menu">
+    <form id="formulaire-menu" novalidate>
+      <h2 id="titre-modale-menu">Composer mon menu</h2>
+      <div id="modale-menu-contenu"></div>
+      <p class="champ__erreur" id="erreur-modale-menu" role="alert" hidden></p>
+      <div class="modale__actions">
+        <button type="button" class="btn btn-secondaire" data-action="fermer-modale">Annuler</button>
+        <button type="submit" class="btn btn-primaire">Ajouter au panier</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Modale : choix de taille (produit simple accompagnement/boisson) -->
+  <dialog id="modale-taille" aria-labelledby="titre-modale-taille">
+    <form id="formulaire-taille" novalidate>
+      <h2 id="titre-modale-taille">Choisir la taille</h2>
+      <div id="modale-taille-contenu"></div>
+      <div class="modale__actions">
+        <button type="button" class="btn btn-secondaire" data-action="fermer-modale">Annuler</button>
+        <button type="submit" class="btn btn-primaire">Ajouter au panier</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/api.js"></script>
+  <script src="js/panier.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

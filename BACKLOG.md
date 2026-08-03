@@ -17,9 +17,9 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 - [x] **T01.1** — Lister les entités et leurs attributs : Utilisateur, Produit, Menu, CompositionMenu, Commande, LigneCommande, Statut, Catégorie *(voir `docs/conception/01-entites-et-relations.md`)*
 - [x] **T01.2** — Définir les relations et cardinalités entre entités (1-N, N-N) et les contraintes (clés étrangères, unicité)
-- [x] **T01.3** — Réaliser le schéma conceptuel de données (MCD)
-- [x] **T01.4** — Décliner le schéma physique de données (MPD) : tables, colonnes, types, clés primaires/étrangères
-- [x] **T01.5** — Définir la structure JSON commune (produits, menus, commande envoyée) — **doit être identique** entre les fichiers JSON statiques et les futures réponses API
+- [x] **T01.3** — Réaliser le schéma conceptuel de données (MCD) *(voir `docs/conception/02-mcd.md`)*
+- [x] **T01.4** — Décliner le schéma physique de données (MPD) : tables, colonnes, types, clés primaires/étrangères *(voir `docs/conception/03-mpd.md` et `back/sql/schema.sql`)*
+- [ ] **T01.5** — Définir la structure JSON commune (produits, menus, commande envoyée) — **doit être identique** entre les fichiers JSON statiques et les futures réponses API
 - [ ] **T01.6** — Réaliser le schéma fonctionnel (parcours client borne + parcours back-office par rôle, diagramme de cas d'utilisation)
 - [ ] **T01.7** — Définir/adapter le wireframe des écrans de la borne (catalogue, panier, récapitulatif, saisie numéro)
 - [ ] **T01.8** — Définir le wireframe des écrans back-office (login, dashboard par rôle, CRUD produits/menus, liste commandes)
@@ -28,24 +28,24 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 2 — Bloc 1 : Front-end (borne) — mode JSON statique
 
-- [x] **T02.1** — Squelette HTML sémantique des pages (accueil/catalogue, panier, récapitulatif) avec balises `header`/`nav`/`main`/`section`/`footer`
-- [x] **T02.2** — Intégration CSS de base à partir de la maquette (grille, typographie, couleurs) ciblant 1920×1080
-- [x] **T02.3** — Media queries / mise en page responsive pour résolutions inférieures (tablette, mobile si applicable)
-- [x] **T02.4** — Créer/placer les fichiers `produits.json` et `menus.json` sur le serveur (structure définie en T01.5)
-- [x] **T02.5** — Fonction AJAX (`fetch`) de récupération des produits + affichage dynamique du catalogue
-- [x] **T02.6** — Fonction AJAX de récupération des menus + affichage dynamique
-- [x] **T02.7** — Filtrage/affichage par catégorie (si prévu dans la maquette)
-- [x] **T02.8** — Logique panier : ajouter un produit simple, incrémenter/décrémenter quantité
-- [x] **T02.9** — Logique panier : composer un menu (choix burger + frites/salade + boisson + sauce)
-- [x] **T02.10** — Gestion des tailles (accompagnement/boisson) avec supplément +0,50 € appliqué au prix
-- [x] **T02.11** — Calcul et affichage du total en temps réel (unitaire + panier global)
-- [x] **T02.12** — Vue panier détaillée : modifier quantité, supprimer une ligne
-- [x] **T02.13** — Formulaire de saisie du numéro de commande + validation JS (champ requis, format)
-- [x] **T02.14** — Écran récapitulatif final de la commande avant envoi
-- [x] **T02.15** — Construction du JSON de commande final et envoi (vers mock/API) + gestion de l'accusé de réception *(simulé en attendant l'API du Bloc 2)*
-- [x] **T02.16** — Gestion des erreurs côté front (produit indisponible, échec réseau AJAX, panier vide)
-- [x] **T02.17** — Passe accessibilité : `alt` sur images, labels de formulaire, contrastes, focus clavier, ARIA si besoin
-- [x] **T02.18** — Passe SEO/sémantique : title, meta description, hiérarchie des titres
+- [ ] **T02.1** — Squelette HTML sémantique des pages (accueil/catalogue, panier, récapitulatif) avec balises `header`/`nav`/`main`/`section`/`footer`
+- [ ] **T02.2** — Intégration CSS de base à partir de la maquette (grille, typographie, couleurs) ciblant 1920×1080
+- [ ] **T02.3** — Media queries / mise en page responsive pour résolutions inférieures (tablette, mobile si applicable)
+- [ ] **T02.4** — Créer/placer les fichiers `produits.json` et `menus.json` sur le serveur (structure définie en T01.5)
+- [ ] **T02.5** — Fonction AJAX (`fetch`) de récupération des produits + affichage dynamique du catalogue
+- [ ] **T02.6** — Fonction AJAX de récupération des menus + affichage dynamique
+- [ ] **T02.7** — Filtrage/affichage par catégorie (si prévu dans la maquette)
+- [ ] **T02.8** — Logique panier : ajouter un produit simple, incrémenter/décrémenter quantité
+- [ ] **T02.9** — Logique panier : composer un menu (choix burger + frites/salade + boisson + sauce)
+- [ ] **T02.10** — Gestion des tailles (accompagnement/boisson) avec supplément +0,50 € appliqué au prix
+- [ ] **T02.11** — Calcul et affichage du total en temps réel (unitaire + panier global)
+- [ ] **T02.12** — Vue panier détaillée : modifier quantité, supprimer une ligne
+- [ ] **T02.13** — Formulaire de saisie du numéro de commande + validation JS (champ requis, format)
+- [ ] **T02.14** — Écran récapitulatif final de la commande avant envoi
+- [ ] **T02.15** — Construction du JSON de commande final et envoi (vers mock/API) + gestion de l'accusé de réception
+- [ ] **T02.16** — Gestion des erreurs côté front (produit indisponible, échec réseau AJAX, panier vide)
+- [ ] **T02.17** — Passe accessibilité : `alt` sur images, labels de formulaire, contrastes, focus clavier, ARIA si besoin
+- [ ] **T02.18** — Passe SEO/sémantique : title, meta description, hiérarchie des titres
 - [ ] **T02.19** — Vérification compatibilité navigateurs récents (Chrome/Firefox/Edge)
 - [ ] **T02.20** — Rédiger le README front (installation, structure des données JSON, scénarios de test)
 

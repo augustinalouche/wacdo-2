@@ -1,0 +1,15 @@
+{
+  "sauces": [
+    {"id":"ketchup","nom":"Ketchup"},
+    {"id":"mayonnaise","nom":"Mayonnaise"},
+    {"id":"bbq","nom":"Barbecue"},
+    {"id":"algerienne","nom":"Algérienne"},
+    {"id":"moutarde","nom":"Moutarde"}
+  ],
+  "menus": [
+    {"id":"menu-classique","nom":"Menu Classique","description":"Le Classique, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-classique","prixBase":7.90,"image":"menu-classique","disponible":true},
+    {"id":"menu-bacon","nom":"Menu Bacon Crousti","description":"Le Bacon Crousti, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-bacon","prixBase":8.90,"image":"menu-bacon","disponible":true},
+    {"id":"menu-poulet","nom":"Menu Poulet Croustillant","description":"Le Poulet Croustillant, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-poulet","prixBase":8.50,"image":"menu-poulet","disponible":true},
+    {"id":"menu-veggie","nom":"Menu Veggie","description":"Le Veggie, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-veggie","prixBase":8.20,"image":"menu-veggie","disponible":true}
+  ]
+}

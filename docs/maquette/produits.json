@@ -1,0 +1,13 @@
+[
+  {"id":"burger-classique","nom":"Le Classique","description":"Steak haché, cheddar, oignons, cornichons, sauce burger","categorie":"burger","prix":4.90,"image":"burger-classique","disponible":true},
+  {"id":"burger-bacon","nom":"Le Bacon Crousti","description":"Steak haché, bacon fumé, cheddar, sauce barbecue","categorie":"burger","prix":5.90,"image":"burger-bacon","disponible":true},
+  {"id":"burger-poulet","nom":"Le Poulet Croustillant","description":"Filet de poulet pané, salade, tomate, sauce fromagère","categorie":"burger","prix":5.50,"image":"burger-poulet","disponible":true},
+  {"id":"burger-veggie","nom":"Le Veggie","description":"Galette de légumes, cheddar, salade, sauce curry doux","categorie":"burger","prix":5.20,"image":"burger-veggie","disponible":true},
+  {"id":"frites","nom":"Frites","description":"Pommes de terre fraîches, cuisson croustillante","categorie":"accompagnement","prix":{"petite":2.20,"grande":2.70},"image":"frites","disponible":true},
+  {"id":"salade","nom":"Salade Verte","description":"Mélange de jeunes pousses, vinaigrette légère","categorie":"accompagnement","prix":{"petite":2.40,"grande":2.90},"image":"salade","disponible":true},
+  {"id":"cola","nom":"Cola","description":"Boisson gazeuse rafraîchissante","categorie":"boisson","prix":{"petite":1.90,"grande":2.40},"image":"cola","disponible":true},
+  {"id":"eau","nom":"Eau Minérale","description":"Eau plate en bouteille","categorie":"boisson","prix":{"petite":1.60,"grande":2.10},"image":"eau","disponible":true},
+  {"id":"jus-orange","nom":"Jus d'Orange","description":"100% pur jus, sans sucres ajoutés","categorie":"boisson","prix":{"petite":2.00,"grande":2.50},"image":"jus-orange","disponible":true},
+  {"id":"cookie","nom":"Cookie Pépites","description":"Cookie moelleux aux pépites de chocolat","categorie":"dessert","prix":1.90,"image":"cookie","disponible":true},
+  {"id":"fondant","nom":"Fondant au Chocolat","description":"Cœur coulant au chocolat noir","categorie":"dessert","prix":2.90,"image":"fondant","disponible":true}
+]

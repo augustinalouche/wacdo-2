@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ec3013"/><text x="50" y="58" font-size="34" fill="white" text-anchor="middle" font-family="Arial">W</text></svg></template>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="./modernist.css" />
+<script src="./image-slot.js"></script>
+<script type="application/json" id="produits-fallback">[
+  {"id":"burger-classique","nom":"Le Classique","description":"Steak haché, cheddar, oignons, cornichons, sauce burger","categorie":"burger","prix":4.90,"image":"burger-classique","disponible":true},
+  {"id":"burger-bacon","nom":"Le Bacon Crousti","description":"Steak haché, bacon fumé, cheddar, sauce barbecue","categorie":"burger","prix":5.90,"image":"burger-bacon","disponible":true},
+  {"id":"burger-poulet","nom":"Le Poulet Croustillant","description":"Filet de poulet pané, salade, tomate, sauce fromagère","categorie":"burger","prix":5.50,"image":"burger-poulet","disponible":true},
+  {"id":"burger-veggie","nom":"Le Veggie","description":"Galette de légumes, cheddar, salade, sauce curry doux","categorie":"burger","prix":5.20,"image":"burger-veggie","disponible":true},
+  {"id":"frites","nom":"Frites","description":"Pommes de terre fraîches, cuisson croustillante","categorie":"accompagnement","prix":{"petite":2.20,"grande":2.70},"image":"frites","disponible":true},
+  {"id":"salade","nom":"Salade Verte","description":"Mélange de jeunes pousses, vinaigrette légère","categorie":"accompagnement","prix":{"petite":2.40,"grande":2.90},"image":"salade","disponible":true},
+  {"id":"cola","nom":"Cola","description":"Boisson gazeuse rafraîchissante","categorie":"boisson","prix":{"petite":1.90,"grande":2.40},"image":"cola","disponible":true},
+  {"id":"eau","nom":"Eau Minérale","description":"Eau plate en bouteille","categorie":"boisson","prix":{"petite":1.60,"grande":2.10},"image":"eau","disponible":true},
+  {"id":"jus-orange","nom":"Jus d'Orange","description":"100% pur jus, sans sucres ajoutés","categorie":"boisson","prix":{"petite":2.00,"grande":2.50},"image":"jus-orange","disponible":true},
+  {"id":"cookie","nom":"Cookie Pépites","description":"Cookie moelleux aux pépites de chocolat","categorie":"dessert","prix":1.90,"image":"cookie","disponible":true},
+  {"id":"fondant","nom":"Fondant au Chocolat","description":"Cœur coulant au chocolat noir","categorie":"dessert","prix":2.90,"image":"fondant","disponible":true}
+]</script>
+<script type="application/json" id="menus-fallback">{
+  "sauces": [
+    {"id":"ketchup","nom":"Ketchup"},
+    {"id":"mayonnaise","nom":"Mayonnaise"},
+    {"id":"bbq","nom":"Barbecue"},
+    {"id":"algerienne","nom":"Algérienne"},
+    {"id":"moutarde","nom":"Moutarde"}
+  ],
+  "menus": [
+    {"id":"menu-classique","nom":"Menu Classique","description":"Le Classique, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-classique","prixBase":7.90,"image":"menu-classique","disponible":true},
+    {"id":"menu-bacon","nom":"Menu Bacon Crousti","description":"Le Bacon Crousti, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-bacon","prixBase":8.90,"image":"menu-bacon","disponible":true},
+    {"id":"menu-poulet","nom":"Menu Poulet Croustillant","description":"Le Poulet Croustillant, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-poulet","prixBase":8.50,"image":"menu-poulet","disponible":true},
+    {"id":"menu-veggie","nom":"Menu Veggie","description":"Le Veggie, un accompagnement, une boisson et une sauce au choix","burgerId":"burger-veggie","prixBase":8.20,"image":"menu-veggie","disponible":true}
+  ]
+}</script>
+<style>
+*{box-sizing:border-box;}
+body{margin:0;}
+</style>
+</helmet>
+<div lang="fr" style="min-height:100vh;width:100%;display:flex;flex-direction:column;background:var(--color-bg);color:var(--color-text);">
+
+  <nav class="nav">
+    <span class="nav-brand">WACDO</span>
+    <sc-if value="{{ isCatalogueView }}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" onClick="{{ setTabProduits }}" aria-current="{{ produitsTabCurrent }}" style="background:{{ produitsTabBg }};color:{{ produitsTabColor }};">Produits</button>
+    </sc-if>
+    <sc-if value="{{ isCatalogueView }}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn" onClick="{{ setTabMenus }}" aria-current="{{ menusTabCurrent }}" style="background:{{ menusTabBg }};color:{{ menusTabColor }};">Menus</button>
+    </sc-if>
+    <sc-if value="{{ isCatalogueView }}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="btn btn-primary" onClick="{{ goToPanier }}" aria-label="Voir le panier">
+        <span aria-hidden="true">Panier ({{ cartCount }})</span>
+        <span aria-live="polite">{{ cartTotalFmt }}</span>
+      </button>
+    </sc-if>
+    <sc-if value="{{ isPanierView }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="btn btn-secondary" onClick="{{ goToCatalogue }}">Retour à la carte</button>
+    </sc-if>
+    <sc-if value="{{ isValidationView }}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="btn btn-secondary" onClick="{{ goToPanier }}">Retour au panier</button>
+    </sc-if>
+  </nav>
+
+  <main style="flex:1;width:100%;max-width:1300px;margin:0 auto;padding:var(--space-8);">
+
+    <sc-if value="{{ notLoaded }}" hint-placeholder-val="{{ false }}">
+      <p role="status" style="text-align:center;padding:80px 0;" class="text-muted">Chargement des produits et menus…</p>
+    </sc-if>
+    <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+      <p role="alert" style="text-align:center;padding:80px 0;color:var(--color-accent-700);">{{ error }}</p>
+    </sc-if>
+
+    <sc-if value="{{ isCatalogueView }}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{ isProduitsTab }}" hint-placeholder-val="{{ true }}">
+        <sc-for list="{{ groupedProduits }}" as="group" hint-placeholder-count="2">
+          <section style="margin-bottom:var(--space-8);" aria-labelledby="cat-{{ group.key }}">
+            <h2 id="cat-{{ group.key }}">{{ group.label }}</h2>
+            <hr class="hr" />
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--space-4);">
+              <sc-for list="{{ group.items }}" as="item" hint-placeholder-count="3">
+                <article class="card elev-sm">
+                  <div style="width:100%;height:150px;background:var(--color-neutral-200);">
+                    <image-slot id="img-{{ item.id }}" shape="rect" fit="contain" placeholder="Photo produit" src="{{ item.imageSrc }}"></image-slot>
+                  </div>
+                  <h3 class="card-title">{{ item.nom }}</h3>
+                  <p class="card-body">{{ item.description }}</p>
+                  <sc-if value="{{ item.isSized }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:var(--space-2);">
+                      <button type="button" class="btn btn-secondary" style="flex:1;" onClick="{{ item.addPetite }}">Petite — {{ item.petitePrixFmt }}</button>
+                      <button type="button" class="btn btn-primary" style="flex:1;" onClick="{{ item.addGrande }}">Grande — {{ item.grandePrixFmt }}</button>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ item.prixFmt }}" hint-placeholder-val="{{ null }}">
+                    <div class="card-meta" style="justify-content:space-between;">
+                      <strong style="font-size:15px;color:var(--color-text);">{{ item.prixFmt }}</strong>
+                      <button type="button" class="btn btn-primary" onClick="{{ item.addSimple }}">Ajouter</button>
+                    </div>
+                  </sc-if>
+                </article>
+              </sc-for>
+            </div>
+          </section>
+        </sc-for>
+      </sc-if>
+
+      <sc-if value="{{ isMenusTab }}" hint-placeholder-val="{{ false }}">
+        <section aria-labelledby="cat-menus">
+          <h2 id="cat-menus">Nos menus</h2>
+          <hr class="hr" />
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-4);">
+            <sc-for list="{{ menus }}" as="menu" hint-placeholder-count="3">
+              <article class="card elev-sm">
+                <div style="width:100%;height:160px;background:var(--color-neutral-200);">
+                  <image-slot id="img-{{ menu.id }}" shape="rect" fit="contain" placeholder="Photo menu" src="{{ menu.imageSrc }}"></image-slot>
+                </div>
+                <h3 class="card-title">{{ menu.nom }}</h3>
+                <p class="card-body">{{ menu.description }}</p>
+                <div class="card-meta" style="justify-content:space-between;">
+                  <strong style="font-size:15px;color:var(--color-text);">à partir de {{ menu.prixBaseFmt }}</strong>
+                  <button type="button" class="btn btn-primary" onClick="{{ menu.composer }}">Composer</button>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </section>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{ isPanierView }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="panier-title">
+        <h2 id="panier-title">Votre panier</h2>
+        <hr class="hr" />
+        <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+          <p class="text-muted">Votre panier est vide. Retournez à la carte pour ajouter des produits.</p>
+        </sc-if>
+        <ul style="list-style:none;margin:0 0 var(--space-6);padding:0;display:flex;flex-direction:column;">
+          <sc-for list="{{ cart }}" as="item" hint-placeholder-count="0">
+            <li style="display:flex;align-items:center;gap:var(--space-4);padding:var(--space-3) 0;border-bottom:1px solid var(--color-divider);">
+              <div style="flex:1;">
+                <p style="margin:0;font-weight:600;">{{ item.nom }}</p>
+                <sc-if value="{{ item.hasDetails }}" hint-placeholder-val="{{ false }}">
+                  <p class="text-muted" style="margin:4px 0 0;font-size:13px;">{{ item.detailsResume }}</p>
+                </sc-if>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--space-2);">
+                <button type="button" class="btn btn-icon btn-secondary" onClick="{{ item.decrement }}" aria-label="Diminuer la quantité">−</button>
+                <span aria-live="polite" style="min-width:20px;text-align:center;font-weight:600;">{{ item.quantite }}</span>
+                <button type="button" class="btn btn-icon btn-secondary" onClick="{{ item.increment }}" aria-label="Augmenter la quantité">+</button>
+              </div>
+              <strong style="min-width:80px;text-align:right;">{{ item.ligneTotalFmt }}</strong>
+              <button type="button" class="btn btn-icon btn-ghost" onClick="{{ item.remove }}" aria-label="Retirer cet article">✕</button>
+            </li>
+          </sc-for>
+        </ul>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--space-4) 0;border-top:2px solid var(--color-divider);">
+          <h3 style="margin:0;">Total</h3>
+          <strong aria-live="polite" style="font-size:22px;">{{ cartTotalFmt }}</strong>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" onClick="{{ goToValidation }}" disabled="{{ cartEmpty }}">Valider la commande</button>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isValidationView }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="valid-title" style="max-width:440px;margin:0 auto;">
+        <h2 id="valid-title">Récupération de commande</h2>
+        <p class="text-muted">Saisissez un numéro : il vous sera associé pour récupérer votre commande au comptoir.</p>
+        <form onSubmit="{{ submitOrder }}" style="display:flex;flex-direction:column;gap:var(--space-4);">
+          <div class="field">
+            <label htmlFor="numero-commande">Numéro de commande</label>
+            <input class="input" id="numero-commande" name="numero" type="text" inputMode="numeric" value="{{ numeroCommande }}" onChange="{{ onNumeroChange }}" aria-describedby="numero-aide" aria-invalid="{{ hasNumeroError }}" placeholder="Ex : 4821" />
+          </div>
+          <p id="numero-aide" class="text-muted" style="margin:0;font-size:12px;">2 à 10 chiffres.</p>
+          <sc-if value="{{ hasNumeroError }}" hint-placeholder-val="{{ false }}">
+            <p role="alert" style="margin:0;font-size:13px;color:var(--color-accent-700);">{{ numeroError }}</p>
+          </sc-if>
+          <button type="submit" class="btn btn-primary btn-block" disabled="{{ sending }}">{{ submitLabel }}</button>
+        </form>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ isConfirmationView }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="confirm-title" style="max-width:600px;margin:0 auto;">
+        <h2 id="confirm-title">Commande envoyée</h2>
+        <p>Votre numéro : <span class="tag tag-accent" style="font-size:18px;padding:6px 14px;">{{ commandeEnvoyee.numero }}</span></p>
+        <p class="text-muted">Présentez ce numéro au comptoir pour récupérer votre commande.</p>
+        <hr class="hr" />
+        <details>
+          <summary style="cursor:pointer;font-weight:600;">Détail JSON envoyé à l'API</summary>
+          <pre style="white-space:pre-wrap;word-break:break-word;font-size:12px;background:var(--color-surface);padding:var(--space-3);margin-top:var(--space-2);">{{ commandeJson }}</pre>
+        </details>
+        <button type="button" class="btn btn-primary" style="margin-top:var(--space-4);" onClick="{{ nouvelleCommande }}">Nouvelle commande</button>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <sc-if value="{{ composingMenu }}" hint-placeholder-val="{{ null }}">
+    <div class="dialog-backdrop" role="dialog" aria-modal="true" aria-labelledby="composer-title" onKeyDown="{{ modalKeyDown }}">
+      <div class="dialog" style="max-width:600px;max-height:88vh;overflow-y:auto;">
+        <h3 class="dialog-title" id="composer-title">{{ composingMenu.nom }}</h3>
+        <p class="dialog-body">Avec {{ composingMenu.burgerNom }}. Choisissez votre accompagnement, votre boisson et votre sauce.</p>
+
+        <h4>Accompagnement</h4>
+        <div role="radiogroup" aria-label="Accompagnement" style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
+          <sc-for list="{{ accompagnements }}" as="acc" hint-placeholder-count="2">
+            <label class="radio">
+              <input type="radio" name="accompagnement" checked="{{ acc.isSelected }}" onChange="{{ acc.select }}" />
+              <span class="dot"></span>{{ acc.nom }}
+            </label>
+          </sc-for>
+        </div>
+        <div class="seg" style="margin-top:var(--space-2);">
+          <label class="seg-opt"><input type="radio" name="acc-taille" checked="{{ accompagnementTaillePetiteSelected }}" onChange="{{ setAccompagnementTaillePetite }}" />Petite</label>
+          <label class="seg-opt"><input type="radio" name="acc-taille" checked="{{ accompagnementTailleGrandeSelected }}" onChange="{{ setAccompagnementTailleGrande }}" />Grande (+0,50 €)</label>
+        </div>
+
+        <h4>Boisson</h4>
+        <div role="radiogroup" aria-label="Boisson" style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
+          <sc-for list="{{ boissons }}" as="bois" hint-placeholder-count="4">
+            <label class="radio">
+              <input type="radio" name="boisson" checked="{{ bois.isSelected }}" onChange="{{ bois.select }}" />
+              <span class="dot"></span>{{ bois.nom }}
+            </label>
+          </sc-for>
+        </div>
+        <div class="seg" style="margin-top:var(--space-2);">
+          <label class="seg-opt"><input type="radio" name="bois-taille" checked="{{ boissonTaillePetiteSelected }}" onChange="{{ setBoissonTaillePetite }}" />Petite</label>
+          <label class="seg-opt"><input type="radio" name="bois-taille" checked="{{ boissonTailleGrandeSelected }}" onChange="{{ setBoissonTailleGrande }}" />Grande (+0,50 €)</label>
+        </div>
+
+        <h4>Sauce</h4>
+        <div role="radiogroup" aria-label="Sauce" style="display:flex;flex-wrap:wrap;gap:var(--space-3);">
+          <sc-for list="{{ sauces }}" as="sauce" hint-placeholder-count="4">
+            <label class="radio">
+              <input type="radio" name="sauce" checked="{{ sauce.isSelected }}" onChange="{{ sauce.select }}" />
+              <span class="dot"></span>{{ sauce.nom }}
+            </label>
+          </sc-for>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-secondary" onClick="{{ closeComposer }}">Annuler</button>
+          <button type="button" class="btn btn-primary" onClick="{{ confirmComposition }}">Ajouter au panier — {{ composingMenu.totalFmt }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    produits: [], sauces: [], menus: [], loaded: false, error: null,
+    tab: 'produits',
+    view: 'catalogue',
+    cart: [], cartIdCounter: 1,
+    composingMenu: null,
+    compositionChoice: { accompagnementId: null, accompagnementTaille: 'petite', boissonId: null, boissonTaille: 'petite', sauceId: null },
+    numeroCommande: '',
+    numeroError: '',
+    sending: false,
+    commandeEnvoyee: null,
+  };
+
+  componentDidMount() {
+    // AJAX (fetch) depuis les fichiers JSON du serveur ; si le fichier est ouvert
+    // directement (file://, sans serveur), on retombe sur la même donnée intégrée en secours.
+    const fallback = () => {
+      const produits = JSON.parse(document.getElementById('produits-fallback').textContent);
+      const menusData = JSON.parse(document.getElementById('menus-fallback').textContent);
+      this.setState({ produits, sauces: menusData.sauces, menus: menusData.menus, loaded: true });
+    };
+    Promise.all([
+      fetch('produits.json').then(r => r.json()),
+      fetch('menus.json').then(r => r.json()),
+    ]).then(([produits, menusData]) => {
+      this.setState({ produits, sauces: menusData.sauces, menus: menusData.menus, loaded: true });
+    }).catch(fallback);
+  }
+
+  formatPrix(n) { return n.toFixed(2).replace('.', ',') + ' \u20ac'; }
+  setTab(tab) { this.setState({ tab }); }
+  goTo(view) { this.setState({ view }); }
+
+  addSimpleToCart(produit) {
+    this.setState(s => ({
+      cart: [...s.cart, { cartId: s.cartIdCounter, type: 'produit', produitId: produit.id, nom: produit.nom, quantite: 1, details: null, prixUnitaire: produit.prix }],
+      cartIdCounter: s.cartIdCounter + 1,
+    }));
+  }
+
+  addSizedToCart(produit, taille) {
+    const prix = produit.prix[taille];
+    this.setState(s => ({
+      cart: [...s.cart, { cartId: s.cartIdCounter, type: 'produit', produitId: produit.id, nom: produit.nom, quantite: 1, details: { taille: taille === 'grande' ? 'Grande' : 'Petite' }, prixUnitaire: prix }],
+      cartIdCounter: s.cartIdCounter + 1,
+    }));
+  }
+
+  openMenuComposer(menu) {
+    const accompagnements = this.state.produits.filter(p => p.categorie === 'accompagnement');
+    const boissons = this.state.produits.filter(p => p.categorie === 'boisson');
+    const sauces = this.state.sauces;
+    this.setState({
+      composingMenu: menu,
+      compositionChoice: {
+        accompagnementId: accompagnements[0] ? accompagnements[0].id : null,
+        accompagnementTaille: 'petite',
+        boissonId: boissons[0] ? boissons[0].id : null,
+        boissonTaille: 'petite',
+        sauceId: sauces[0] ? sauces[0].id : null,
+      },
+    });
+  }
+
+  closeComposer() { this.setState({ composingMenu: null }); }
+  setComposition(field, value) { this.setState(s => ({ compositionChoice: { ...s.compositionChoice, [field]: value } })); }
+
+  confirmComposition() {
+    const menu = this.state.composingMenu;
+    const c = this.state.compositionChoice;
+    const burger = this.state.produits.find(p => p.id === menu.burgerId);
+    const accompagnement = this.state.produits.find(p => p.id === c.accompagnementId);
+    const boisson = this.state.produits.find(p => p.id === c.boissonId);
+    const sauce = this.state.sauces.find(x => x.id === c.sauceId);
+    const supplement = (c.accompagnementTaille === 'grande' ? 0.5 : 0) + (c.boissonTaille === 'grande' ? 0.5 : 0);
+    const prixUnitaire = menu.prixBase + supplement;
+    this.setState(s => ({
+      cart: [...s.cart, {
+        cartId: s.cartIdCounter, type: 'menu', produitId: menu.id, nom: menu.nom, quantite: 1, prixUnitaire,
+        details: {
+          burger: burger ? burger.nom : '',
+          accompagnement: accompagnement ? accompagnement.nom : '',
+          accompagnementTaille: c.accompagnementTaille === 'grande' ? 'Grande' : 'Petite',
+          boisson: boisson ? boisson.nom : '',
+          boissonTaille: c.boissonTaille === 'grande' ? 'Grande' : 'Petite',
+          sauce: sauce ? sauce.nom : '',
+        },
+      }],
+      cartIdCounter: s.cartIdCounter + 1,
+      composingMenu: null,
+    }));
+  }
+
+  modalKeyDown(e) { if (e.key === 'Escape') this.closeComposer(); }
+
+  changeQty(cartId, delta) {
+    this.setState(s => ({ cart: s.cart.map(item => item.cartId === cartId ? { ...item, quantite: item.quantite + delta } : item).filter(item => item.quantite > 0) }));
+  }
+  removeItem(cartId) { this.setState(s => ({ cart: s.cart.filter(item => item.cartId !== cartId) })); }
+  setNumero(v) { this.setState({ numeroCommande: v, numeroError: '' }); }
+
+  submitOrder(e) {
+    e.preventDefault();
+    const numero = this.state.numeroCommande.trim();
+    if (!/^[0-9]{2,10}$/.test(numero)) {
+      this.setState({ numeroError: 'Merci de saisir un numéro valide (2 à 10 chiffres).' });
+      return;
+    }
+    const total = this.state.cart.reduce((sum, item) => sum + item.prixUnitaire * item.quantite, 0);
+    const commande = {
+      numero,
+      dateHeure: new Date().toISOString(),
+      lignes: this.state.cart.map(item => ({ type: item.type, nom: item.nom, quantite: item.quantite, prixUnitaire: item.prixUnitaire, details: item.details })),
+      total: Math.round(total * 100) / 100,
+    };
+    this.setState({ sending: true });
+    setTimeout(() => { this.setState({ sending: false, commandeEnvoyee: commande, view: 'confirmation' }); }, 800);
+  }
+
+  nouvelleCommande() { this.setState({ cart: [], numeroCommande: '', numeroError: '', commandeEnvoyee: null, view: 'catalogue', tab: 'produits' }); }
+
+  renderVals() {
+    const s = this.state;
+    const fmt = (n) => this.formatPrix(n);
+    const photosDisponibles = ['burger-classique','burger-bacon','burger-poulet','burger-veggie','menu-classique','menu-bacon','menu-poulet','menu-veggie','cola','cookie','eau','fondant','frites','jus-orange','salade'];
+    const hasPhoto = (img) => photosDisponibles.includes(img);
+    const catLabels = { burger: 'Burgers', accompagnement: 'Accompagnements', boisson: 'Boissons', dessert: 'Desserts' };
+    const order = ['burger', 'accompagnement', 'boisson', 'dessert'];
+
+    const mapProduit = (p) => {
+      const sized = p.categorie === 'accompagnement' || p.categorie === 'boisson';
+      const base = { ...p, isSized: sized, prixFmt: null, imageSrc: hasPhoto(p.image) ? 'images/' + p.image + '.png' : '' };
+      if (sized) {
+        base.petitePrixFmt = fmt(p.prix.petite);
+        base.grandePrixFmt = fmt(p.prix.grande);
+        base.addPetite = () => this.addSizedToCart(p, 'petite');
+        base.addGrande = () => this.addSizedToCart(p, 'grande');
+      } else {
+        base.prixFmt = fmt(p.prix);
+        base.addSimple = () => this.addSimpleToCart(p);
+      }
+      return base;
+    };
+
+    const groupedProduits = order
+      .map(cat => ({ key: cat, label: catLabels[cat], items: s.produits.filter(p => p.categorie === cat && p.disponible).map(mapProduit) }))
+      .filter(g => g.items.length > 0);
+
+    const menus = s.menus.filter(m => m.disponible).map(m => ({ ...m, prixBaseFmt: fmt(m.prixBase), imageSrc: hasPhoto(m.image) ? 'images/' + m.image + '.png' : '', composer: () => this.openMenuComposer(m) }));
+
+    const cart = s.cart.map(item => {
+      let detailsResume = '';
+      if (item.type === 'menu' && item.details) {
+        const d = item.details;
+        detailsResume = d.burger + ' \u2022 ' + d.accompagnement + ' (' + d.accompagnementTaille + ') \u2022 ' + d.boisson + ' (' + d.boissonTaille + ') \u2022 Sauce ' + d.sauce;
+      } else if (item.details && item.details.taille) {
+        detailsResume = 'Taille ' + item.details.taille;
+      }
+      return {
+        ...item, detailsResume, hasDetails: !!detailsResume,
+        prixUnitaireFmt: fmt(item.prixUnitaire), ligneTotalFmt: fmt(item.prixUnitaire * item.quantite),
+        increment: () => this.changeQty(item.cartId, 1), decrement: () => this.changeQty(item.cartId, -1), remove: () => this.removeItem(item.cartId),
+      };
+    });
+
+    const cartTotal = s.cart.reduce((sum, item) => sum + item.prixUnitaire * item.quantite, 0);
+    const cartCount = s.cart.reduce((sum, item) => sum + item.quantite, 0);
+
+    let composingMenu = null;
+    if (s.composingMenu) {
+      const burger = s.produits.find(p => p.id === s.composingMenu.burgerId);
+      const supplement = (s.compositionChoice.accompagnementTaille === 'grande' ? 0.5 : 0) + (s.compositionChoice.boissonTaille === 'grande' ? 0.5 : 0);
+      composingMenu = { ...s.composingMenu, burgerNom: burger ? burger.nom : '', totalFmt: fmt(s.composingMenu.prixBase + supplement) };
+    }
+
+    const accompagnements = s.produits.filter(p => p.categorie === 'accompagnement').map(p => ({
+      ...p, isSelected: s.compositionChoice.accompagnementId === p.id, select: () => this.setComposition('accompagnementId', p.id),
+    }));
+    const boissons = s.produits.filter(p => p.categorie === 'boisson').map(p => ({
+      ...p, isSelected: s.compositionChoice.boissonId === p.id, select: () => this.setComposition('boissonId', p.id),
+    }));
+    const sauces = s.sauces.map(sc => ({ ...sc, isSelected: s.compositionChoice.sauceId === sc.id, select: () => this.setComposition('sauceId', sc.id) }));
+
+    return {
+      notLoaded: !s.loaded, hasError: !!s.error, error: s.error,
+      isProduitsTab: s.tab === 'produits', isMenusTab: s.tab === 'menus',
+      produitsTabCurrent: s.tab === 'produits' ? 'page' : undefined,
+      menusTabCurrent: s.tab === 'menus' ? 'page' : undefined,
+      produitsTabBg: s.tab === 'produits' ? 'var(--color-accent)' : 'transparent',
+      produitsTabColor: s.tab === 'produits' ? 'var(--color-bg)' : 'var(--color-text)',
+      menusTabBg: s.tab === 'menus' ? 'var(--color-accent)' : 'transparent',
+      menusTabColor: s.tab === 'menus' ? 'var(--color-bg)' : 'var(--color-text)',
+      isCatalogueView: s.view === 'catalogue', isPanierView: s.view === 'panier', isValidationView: s.view === 'validation', isConfirmationView: s.view === 'confirmation',
+      setTabProduits: () => this.setTab('produits'), setTabMenus: () => this.setTab('menus'),
+      goToCatalogue: () => this.goTo('catalogue'), goToPanier: () => this.goTo('panier'), goToValidation: () => this.goTo('validation'),
+      groupedProduits, menus,
+      cart, cartTotalFmt: fmt(cartTotal), cartCount, cartEmpty: s.cart.length === 0,
+      composingMenu,
+      accompagnements, boissons, sauces,
+      accompagnementTaillePetiteSelected: s.compositionChoice.accompagnementTaille === 'petite',
+      accompagnementTailleGrandeSelected: s.compositionChoice.accompagnementTaille === 'grande',
+      boissonTaillePetiteSelected: s.compositionChoice.boissonTaille === 'petite',
+      boissonTailleGrandeSelected: s.compositionChoice.boissonTaille === 'grande',
+      setAccompagnementTaillePetite: () => this.setComposition('accompagnementTaille', 'petite'),
+      setAccompagnementTailleGrande: () => this.setComposition('accompagnementTaille', 'grande'),
+      setBoissonTaillePetite: () => this.setComposition('boissonTaille', 'petite'),
+      setBoissonTailleGrande: () => this.setComposition('boissonTaille', 'grande'),
+      confirmComposition: () => this.confirmComposition(), closeComposer: () => this.closeComposer(),
+      modalKeyDown: (e) => this.modalKeyDown(e),
+      numeroCommande: s.numeroCommande, numeroError: s.numeroError, hasNumeroError: !!s.numeroError,
+      onNumeroChange: (e) => this.setNumero(e.target.value),
+      submitOrder: (e) => this.submitOrder(e), sending: s.sending, submitLabel: s.sending ? 'Envoi en cours…' : 'Valider et envoyer',
+      commandeEnvoyee: s.commandeEnvoyee, commandeJson: s.commandeEnvoyee ? JSON.stringify(s.commandeEnvoyee, null, 2) : '',
+      nouvelleCommande: () => this.nouvelleCommande(),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

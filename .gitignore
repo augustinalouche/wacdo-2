@@ -1,0 +1,16 @@
+# Config sensible (accès BDD, secrets)
+back/config.php
+back/**/config.php
+.env
+
+# PHP
+vendor/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log

@@ -63,4 +63,16 @@ abstract class Controleur
         require dirname(__DIR__) . '/Vues/erreurs/404.php';
         exit;
     }
+
+    /**
+     * À appeler quand l'utilisateur connecté a accès au module mais pas à
+     * l'action précise demandée (ex. un rôle Préparation qui tente de saisir
+     * une commande, action réservée à Accueil/Administration — T07.x).
+     */
+    protected function page403(): void
+    {
+        http_response_code(403);
+        require dirname(__DIR__) . '/Vues/erreurs/403.php';
+        exit;
+    }
 }

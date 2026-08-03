@@ -99,13 +99,13 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 7 — Bloc 2 : Gestion des commandes (rôles Accueil / Préparation)
 
-- [ ] **T07.1** — Modèle Commande + LigneCommande (produits/menus, tailles, quantités, total)
-- [ ] **T07.2** — Formulaire de saisie d'une commande par l'accueil (comptoir/téléphone)
-- [ ] **T07.3** — Vue "commandes à préparer" triée par heure croissante (rôle Préparation)
-- [ ] **T07.4** — Action "marquer préparée" (Préparation) avec contrôle de rôle
-- [ ] **T07.5** — Vue des commandes prêtes à remettre (rôle Accueil)
-- [ ] **T07.6** — Action "marquer livrée" (Accueil) avec contrôle de rôle
-- [ ] **T07.7** — Historique/consultation des commandes passées (filtrage par statut/date)
+- [x] **T07.1** — Modèle Commande + LigneCommande (produits/menus, tailles, quantités, total) *(voir `back/src/Modeles/Commande.php`, `LigneCommande.php`, `CommandeDepot.php` ; prix recalculé serveur à partir du catalogue, jamais fait confiance au formulaire)*
+- [x] **T07.2** — Formulaire de saisie d'une commande par l'accueil (comptoir/téléphone) *(voir `CommandesControleur::creer`, `Vues/commandes/nouvelle.php` ; réservé aux rôles Accueil/Administration)*
+- [x] **T07.3** — Vue "commandes à préparer" triée par heure croissante (rôle Préparation) *(vue par défaut de `/commandes` pour ce rôle, statut "En attente")*
+- [x] **T07.4** — Action "marquer préparée" (Préparation) avec contrôle de rôle *(voir `CommandesControleur::marquerPreparee`, réservé Préparation/Administration)*
+- [x] **T07.5** — Vue des commandes prêtes à remettre (rôle Accueil) *(vue par défaut de `/commandes` pour ce rôle, statut "Prête")*
+- [x] **T07.6** — Action "marquer livrée" (Accueil) avec contrôle de rôle *(voir `CommandesControleur::marquerLivree`, réservé Accueil/Administration)*
+- [x] **T07.7** — Historique/consultation des commandes passées (filtrage par statut/date) *(formulaire de filtres sur `/commandes`, accessible aux trois rôles du module)*
 
 ---
 

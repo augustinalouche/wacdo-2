@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Wacdo\Controleurs\AuthControleur;
+use Wacdo\Controleurs\CommandesControleur;
 use Wacdo\Controleurs\MenusControleur;
 use Wacdo\Controleurs\ProduitsControleur;
 use Wacdo\Controleurs\TableauDeBordControleur;
@@ -73,6 +74,13 @@ $routeur->get('/menus/{id}/editer', [MenusControleur::class, 'editerFormulaire']
 $routeur->post('/menus/{id}', [MenusControleur::class, 'modifier']);
 $routeur->post('/menus/{id}/supprimer', [MenusControleur::class, 'supprimer']);
 
-// Routes suivantes enrichies au fil des EPICs 7 a 8 (commandes, API).
+// EPIC 7 — Gestion des commandes (roles Accueil / Preparation / Administration)
+$routeur->get('/commandes', [CommandesControleur::class, 'liste']);
+$routeur->get('/commandes/nouvelle', [CommandesControleur::class, 'nouveauFormulaire']);
+$routeur->post('/commandes', [CommandesControleur::class, 'creer']);
+$routeur->post('/commandes/{id}/preparer', [CommandesControleur::class, 'marquerPreparee']);
+$routeur->post('/commandes/{id}/livrer', [CommandesControleur::class, 'marquerLivree']);
+
+// Routes suivantes enrichies au fil de l'EPIC 8 (API).
 
 $routeur->distribuer($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

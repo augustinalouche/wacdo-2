@@ -4,7 +4,7 @@ Bloc 2 du projet Wacdo : back-office (gestion produits/menus/utilisateurs/comman
 
 ## Statut
 
-🚧 En cours de développement — fondations MVC, authentification/rôles, gestion produits/menus et gestion des utilisateurs opérationnelles (voir `EPIC 3` à `EPIC 6` et suivants du `BACKLOG.md` à la racine).
+🚧 En cours de développement — fondations MVC, authentification/rôles, gestion produits/menus/utilisateurs et gestion des commandes opérationnelles (voir `EPIC 3` à `EPIC 7` et suivants du `BACKLOG.md` à la racine).
 
 ## Stack
 
@@ -52,12 +52,13 @@ back/
 └── src/
     ├── Core/            # Autoloader, Database (PDO), Routeur, Controleur/Modele abstraits, Validation, Flash, TeleversementImage
     ├── Securite/         # Auth (session, contrôle d'accès par rôle) et Csrf
-    ├── Controleurs/       # AuthControleur, TableauDeBordControleur, ProduitsControleur, MenusControleur, UtilisateursControleur
-    ├── Modeles/            # Utilisateur (+ sous-classes par rôle), Produit, Menu, dépôts (*Depot) et ReferentielDepot
+    ├── Controleurs/       # AuthControleur, TableauDeBordControleur, ProduitsControleur, MenusControleur, UtilisateursControleur, CommandesControleur
+    ├── Modeles/            # Utilisateur (+ sous-classes par rôle), Produit, Menu, Commande/LigneCommande, dépôts (*Depot) et ReferentielDepot
     └── Vues/
         ├── auth/connexion.php
         ├── tableau-de-bord.php
         ├── produits/ , menus/ , utilisateurs/   # liste + formulaire (création/édition) pour chaque module
+        ├── commandes/                            # liste (file de préparation/remise/historique) + formulaire de saisie
         └── erreurs/                              # pages 403 / 404 / 500
 ```
 
@@ -81,6 +82,16 @@ back/
 - `/utilisateurs` (CRUD complet) est réservé au module `utilisateurs` (rôle Administration).
 - Email unique vérifié en base (`UtilisateurDepot::emailExiste`) en plus de la contrainte SQL, mot de passe d'au moins 8 caractères (vide = inchangé en édition).
 - Un compte ne peut ni se supprimer, ni se désactiver, ni changer son propre rôle (garde-fous côté contrôleur ET champs désactivés côté formulaire).
+
+## Gestion des commandes (`EPIC 7`)
+
+- `/commandes` est réservé au module `commandes` (Administration, Préparation, Accueil), mais chaque action fine est restreinte au rôle métier concerné :
+  - Saisie d'une commande comptoir/téléphone (`/commandes/nouvelle`) : Accueil + Administration.
+  - « Marquer préparée » : Préparation + Administration.
+  - « Marquer livrée » : Accueil + Administration.
+- La liste `/commandes` adapte sa vue par défaut au rôle connecté : file « à préparer » (statut `En attente`, triée par heure croissante) pour Préparation, « prêtes à remettre » (statut `Prête`) pour Accueil, historique complet pour Administration. Un formulaire de filtres (statut, plage de dates) est disponible pour les trois rôles (`T07.7`).
+- `CommandeDepot::creer()` recalcule et fige le prix de chaque ligne à partir du catalogue courant (prix produit, prix par taille, ou prix de base du menu + suppléments de taille de la composition) : **le prix n'est jamais accepté depuis le formulaire**, même règle que la future API (`docs/conception/04-structure-json.md`, `T09.x`).
+- La création d'une commande (en-tête + lignes + compositions de menu) est transactionnelle : soit tout est inséré, soit rien ne l'est (`PDO::beginTransaction`/`commit`/`rollBack`).
 
 ## Endpoints API
 

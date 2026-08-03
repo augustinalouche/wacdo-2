@@ -29,11 +29,11 @@ $base = Routeur::urlBase();
         <p>Connecté(e) en tant que <strong><?= htmlspecialchars($utilisateur['libelleRole'], ENT_QUOTES) ?></strong> (<?= htmlspecialchars($utilisateur['email'], ENT_QUOTES) ?>).</p>
 
         <ul>
+            <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/commandes">Commandes</a></li>
             <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/produits">Produits</a></li>
             <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/menus">Menus</a></li>
             <li><a href="<?= htmlspecialchars($base, ENT_QUOTES) ?>/utilisateurs">Utilisateurs</a> (réservé à l'Administration)</li>
         </ul>
-        <p>Le module « Commandes » (rôles Préparation/Accueil) sera ajouté avec <code>EPIC 7</code>.</p>
     </main>
 </body>
 </html>

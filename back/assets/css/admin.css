@@ -201,3 +201,62 @@ a { color: var(--couleur-accent); }
 .formulaire-admin .liste-erreurs { margin: 0 0 var(--espace-4); padding-left: 18px; }
 
 .retour-liste { display: inline-block; margin-bottom: var(--espace-4); }
+
+.contenu-admin--large { max-width: 1100px; }
+
+/* EPIC 7 — Commandes */
+.badge-attente { background: var(--couleur-accent-clair); color: var(--couleur-accent-fonce); }
+.badge-preparation { background: #fff4d6; color: #8a6400; }
+.badge-prete { background: #dcecff; color: #14508c; }
+
+.formulaire-filtres {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--espace-3);
+  flex-wrap: wrap;
+  background: var(--couleur-surface);
+  border: 2px solid var(--couleur-divider);
+  padding: var(--espace-3);
+  margin-bottom: var(--espace-4);
+}
+.formulaire-filtres .champ { margin-bottom: 0; }
+.formulaire-filtres select,
+.formulaire-filtres input {
+  padding: var(--espace-2);
+  border: 2px solid var(--couleur-divider);
+  font: inherit;
+  font-size: 14px;
+}
+
+.liste-commandes { display: flex; flex-direction: column; gap: var(--espace-3); }
+
+.carte-commande {
+  background: var(--couleur-surface);
+  border: 2px solid var(--couleur-divider);
+  padding: var(--espace-3);
+}
+.carte-commande summary {
+  cursor: pointer;
+  display: flex;
+  gap: var(--espace-4);
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 600;
+  list-style: none;
+}
+.carte-commande summary::-webkit-details-marker { display: none; }
+.carte-commande__numero { font-weight: 800; }
+.carte-commande__lignes { margin: var(--espace-3) 0; padding-left: 18px; }
+.carte-commande__composition { color: var(--couleur-neutre-700); font-size: 13px; }
+
+.bloc-menu {
+  border: 2px solid var(--couleur-divider);
+  padding: var(--espace-3);
+  margin-bottom: var(--espace-3);
+}
+.bloc-menu__entete { display: flex; align-items: center; gap: var(--espace-4); margin-bottom: var(--espace-3); flex-wrap: wrap; }
+.bloc-menu__entete label { display: flex; align-items: center; gap: var(--espace-2); font-size: 14px; font-weight: 600; }
+.bloc-menu__composition { display: flex; gap: var(--espace-3); flex-wrap: wrap; }
+.bloc-menu__composition .champ { min-width: 140px; flex: 1; margin-bottom: 0; }
+
+.champ-quantite { width: 70px !important; }

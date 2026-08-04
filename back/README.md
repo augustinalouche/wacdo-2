@@ -4,7 +4,7 @@ Bloc 2 du projet Wacdo : back-office (gestion produits/menus/utilisateurs/comman
 
 ## Statut
 
-✅ Back-office complet (authentification/rôles, produits/menus/utilisateurs/commandes) + API publique opérationnelle (voir `EPIC 3` à `EPIC 8` du `BACKLOG.md` à la racine). Reste à brancher le front dessus (`EPIC 10`).
+✅ Back-office complet (authentification/rôles, produits/menus/utilisateurs/commandes) + API publique, consommée par le front en conditions réelles (voir `EPIC 3` à `EPIC 8` et `EPIC 10` du `BACKLOG.md` à la racine).
 
 ## Stack
 

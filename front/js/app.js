@@ -367,10 +367,6 @@ const WacdoApp = (function () {
         const commande = WacdoPanier.construireJsonCommande(els.champNumero.value.trim());
         const reponse = await WacdoApi.envoyerCommande(commande);
 
-        if (!reponse.succes) {
-          throw new Error(reponse.erreur || 'La commande a été refusée.');
-        }
-
         els.confirmationNumero.textContent = reponse.numero;
         WacdoPanier.vider();
         majBadgePanier();
@@ -378,7 +374,7 @@ const WacdoApp = (function () {
       } catch (erreur) {
         console.error('[WacdoApp] envoi commande', erreur);
         els.messageEnvoi.hidden = false;
-        els.messageEnvoi.textContent = "L'envoi de la commande a échoué. Merci de réessayer.";
+        els.messageEnvoi.textContent = erreur.message || "L'envoi de la commande a échoué. Merci de réessayer.";
       } finally {
         els.boutonConfirmerCommande.disabled = false;
         els.boutonConfirmerCommande.textContent = 'Confirmer la commande';

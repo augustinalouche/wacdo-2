@@ -1,17 +1,16 @@
 /**
- * WacdoApi — accès aux données (T02.5, T02.6, T02.15).
- * Les fichiers JSON statiques (data/produits.json, data/menus.json) ont
- * exactement la même structure que les futures réponses de l'API réelle
- * (voir docs/conception/04-structure-json.md). Basculer vers l'API réelle
- * (T10.1) ne demandera que de changer les URLs ci-dessous.
+ * WacdoApi — accès à l'API réelle du back-office (T02.5, T02.6, T02.15, T10.1).
+ * Les fichiers JSON statiques (data/produits.json, data/menus.json) ont servi
+ * de maquette de données pendant l'EPIC 2 ; ce module consomme maintenant
+ * l'API PHP (EPIC 8), qui renvoie exactement la même structure
+ * (voir docs/conception/04-structure-json.md) — aucun autre fichier n'a eu
+ * besoin de changer pour ce basculement.
  */
 const WacdoApi = (function () {
-  const URL_PRODUITS = 'data/produits.json';
-  const URL_MENUS = 'data/menus.json';
-  const URL_API_COMMANDES = '/wacdo2/back/api/commandes';
+  const URL_API_BASE = '/wacdo2/back/api';
 
   async function chargerProduits() {
-    const reponse = await fetch(URL_PRODUITS, { cache: 'no-store' });
+    const reponse = await fetch(`${URL_API_BASE}/produits`, { cache: 'no-store' });
     if (!reponse.ok) {
       throw new Error('Impossible de charger les produits (HTTP ' + reponse.status + ')');
     }
@@ -19,7 +18,7 @@ const WacdoApi = (function () {
   }
 
   async function chargerMenus() {
-    const reponse = await fetch(URL_MENUS, { cache: 'no-store' });
+    const reponse = await fetch(`${URL_API_BASE}/menus`, { cache: 'no-store' });
     if (!reponse.ok) {
       throw new Error('Impossible de charger les menus (HTTP ' + reponse.status + ')');
     }
@@ -27,40 +26,25 @@ const WacdoApi = (function () {
   }
 
   /**
-   * Simule une réponse d'API tant que l'API réelle (EPIC 8) n'est pas branchée.
-   * Renvoie exactement la forme attendue (voir T08.6) pour que le basculement
-   * vers la vraie API (T10.1) ne change rien côté appelant.
+   * Envoie la commande à l'API réelle (T08.3) et renvoie l'accusé de
+   * réception (T08.6). En cas d'erreur (validation, produit indisponible,
+   * réseau…), le message structuré renvoyé par l'API (`erreur`) est propagé
+   * pour être affiché tel quel côté borne.
    */
-  function simulerEnvoiCommande(commande) {
-    return new Promise((resolve) => {
-      window.setTimeout(() => {
-        resolve({
-          succes: true,
-          commandeId: Math.floor(Math.random() * 9000) + 1000,
-          numero: commande.numero,
-          message: 'Commande enregistrée (mode simulation — API non branchée, voir T10.1).',
-        });
-      }, 400);
-    });
-  }
-
   async function envoyerCommande(commande) {
-    try {
-      const reponse = await fetch(URL_API_COMMANDES, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(commande),
-      });
+    const reponse = await fetch(`${URL_API_BASE}/commandes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(commande),
+    });
 
-      if (!reponse.ok) {
-        throw new Error('HTTP ' + reponse.status);
-      }
+    const corps = await reponse.json().catch(() => null);
 
-      return await reponse.json();
-    } catch (erreur) {
-      console.warn('[WacdoApi] API /api/commandes indisponible, simulation locale utilisée.', erreur);
-      return simulerEnvoiCommande(commande);
+    if (!reponse.ok || !corps || !corps.succes) {
+      throw new Error((corps && corps.erreur) || 'HTTP ' + reponse.status);
     }
+
+    return corps;
   }
 
   return {

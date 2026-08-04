@@ -4,7 +4,7 @@ Bloc 1 du projet Wacdo : interface borne tactile pour passer une commande (catal
 
 ## Statut
 
-✅ Application mono-page fonctionnelle en mode JSON statique (`EPIC 2` du `BACKLOG.md` à la racine). Reste : tests multi-navigateurs (`T02.19`) et branchement sur l'API réelle une fois `EPIC 8`/`T10.1` livrés.
+✅ Application mono-page fonctionnelle, branchée sur l'API réelle du back-office (`EPIC 2`, `EPIC 10` du `BACKLOG.md` à la racine). Reste : tests multi-navigateurs (`T02.19`).
 
 ## Stack
 
@@ -28,13 +28,13 @@ front/
 ├── css/
 │   └── style.css       # tokens repris de docs/maquette/modernist.css + responsive
 ├── js/
-│   ├── api.js           # accès data/*.json + envoi de la commande (simulation si API absente)
+│   ├── api.js           # accès à l'API back-office (GET /api/produits, /api/menus, POST /api/commandes)
 │   ├── panier.js        # état et calculs du panier (ajout, quantités, totaux, JSON de commande)
 │   ├── render.js         # construction du DOM (catalogue, panier, récapitulatif)
 │   └── app.js            # orchestration : navigation, formulaires, modales, événements
 ├── data/
-│   ├── produits.json     # catalogue produits (structure : voir docs/conception/04-structure-json.md)
-│   └── menus.json         # menus + sauces disponibles
+│   ├── produits.json     # ancienne maquette de données (EPIC 2) — gardée en référence, plus utilisée par l'appli
+│   └── menus.json         # idem, structure documentée dans docs/conception/04-structure-json.md
 └── img/                  # visuels produits/menus
 ```
 
@@ -46,13 +46,20 @@ front/
 4. **Récapitulatif** — relecture avant envoi.
 5. **Confirmation** — numéro de commande à présenter au comptoir.
 
-## Structure des données
+## Branchement sur l'API (`T10.1`)
 
-Les fichiers JSON statiques (`data/produits.json`, `data/menus.json`) sont utilisés en attendant l'API réelle du Bloc 2. Leur structure — y compris le JSON envoyé lors de la validation d'une commande — est décrite dans `docs/conception/04-structure-json.md` (`T01.5`) et doit rester identique à celle de l'API.
+Le front appelle directement l'API du Bloc 2 (`front/js/api.js`, `URL_API_BASE = '/wacdo2/back/api'`) :
+
+- `GET /api/produits`, `GET /api/menus` pour charger le catalogue.
+- `POST /api/commandes` pour valider une commande — le message d'erreur affiché à l'écran (produit indisponible, réseau…) est directement celui renvoyé par l'API.
+
+Aucun autre fichier front (`panier.js`, `render.js`, `app.js`) n'a eu besoin de changer pour ce basculement : la structure JSON de l'API est strictement identique à celle des anciens fichiers statiques (`docs/conception/04-structure-json.md`, `T01.5`).
+
+Le back-office doit être démarré (Apache + MySQL, base `wacdo2`) pour que le front fonctionne — voir `back/README.md`.
 
 ## Scénarios de test
 
-- Charger la page sans connexion aux JSON (renommer temporairement `data/produits.json`) → un message d'erreur visible doit s'afficher à la place du catalogue.
+- Charger la page avec le back-office arrêté (Apache/MySQL coupés) → un message d'erreur visible doit s'afficher à la place du catalogue.
 - Ajouter un burger, un accompagnement (choix de taille), une boisson (choix de taille), un dessert, puis composer un menu complet → vérifier que le total du panier correspond à la somme attendue (suppléments grande taille inclus).
 - Vider le panier (supprimer toutes les lignes) → le bouton « Valider ma commande » doit être désactivé.
 - Saisir un numéro invalide (vide, 0, 1000, texte) → message d'erreur affiché, pas de passage au récapitulatif.

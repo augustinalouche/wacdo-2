@@ -132,9 +132,9 @@ Légende : `[ ]` à faire, `[x]` terminé. Cochez au fur et à mesure.
 
 ## EPIC 10 — Intégration Front ↔ Back
 
-- [ ] **T10.1** — Basculer les appels AJAX du Front des fichiers JSON statiques vers l'API réelle
-- [ ] **T10.2** — Vérifier la cohérence exacte des structures de données (Front attend / API renvoie)
-- [ ] **T10.3** — Test bout-en-bout : commande passée sur la borne → visible en back-office → traitée → statut mis à jour
+- [x] **T10.1** — Basculer les appels AJAX du Front des fichiers JSON statiques vers l'API réelle *(voir `front/js/api.js`, `URL_API_BASE = '/wacdo2/back/api'` ; simulation locale de `envoyerCommande` supprimée)*
+- [x] **T10.2** — Vérifier la cohérence exacte des structures de données (Front attend / API renvoie) *(structure identique par construction depuis `T01.5`/`EPIC 8` ; vérifié en conditions réelles : `render.js` consomme les données de l'API sans aucune adaptation)*
+- [x] **T10.3** — Test bout-en-bout : commande passée sur la borne → visible en back-office → traitée → statut mis à jour *(commande simulée via `POST /api/commandes` → visible dans la file Préparation → "Prête" → visible Accueil → "Livrée", vérifié en base à chaque étape)*
 
 ---
 
